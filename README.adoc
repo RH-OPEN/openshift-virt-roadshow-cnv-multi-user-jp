@@ -1,46 +1,46 @@
-Welcome to the OpenShift Virtualization Roadshow!
+OpenShift Virtualization Roadshowへようこそ！
 
-== Introduction
-This repository hosts the lab guide for the OpenShift Virtualization Roadshow, which can be delivered by Red Hat Associates to customers and interested parties all over the world.
+== はじめに
+このリポジトリーは、Red Hat アソシエイツが世界中の顧客や関係者に提供する OpenShift 仮想化ロードショーのラボガイドをホストしています。
 
-It is designed to work with the Showroom lab environment provided by the Red Hat Demo Platform (RHDP) team.
+これは、Red Hat Demo Platform (RHDP) チームが提供する Showroom ラボ環境で動作するように設計されています。
 
-This roadshow event is organized to allow you to have a hands-on experience with Red Hat OpenShift Virtualization.
+このロードショーイベントは、Red Hat OpenShift Virtualization を実際に体験していただくために企画されました。
 
-OpenShift Virtualization enables you to bring virtual machines onto a modern, Kubernetes-based infrastructure. It enables the development and delivery of new applications as well as the modernization of existing ones and can create applications that consist of virtual machines, containers, and serverless functions - all managed together using Kubernetes-native tools and paradigms.
+OpenShift Virtualization は、最新の Kubernetes ベースのインフラストラクチャ上に仮想マシンを導入することを可能にします。OpenShift Virtualization は、新しいアプリケーションの開発と提供、および既存のアプリケーションのモダナイゼーションを可能にし、仮想マシン、コンテナ、サーバーレス機能で構成されるアプリケーションを作成できます。
 
-In this event we will explore many common management activities that virtual administrators often encounter in their day to day workflows.
+このイベントでは、仮想管理者が日々のワークフローでよく遭遇する多くの一般的な管理活動について探求します。
 
-== Who Will Benefit Most from attending a Roadshow?
+== ロードショーに参加することで最も恩恵を受けるのは誰ですか？
 
-*Virtual Machine Administrators* -- Those responsible for day to day management of virtual guests in OpenShift Virtualization. These users will often find themselves responsible for provisioning virtual guests, and day to day management of the guests, and the applications running within.
+*仮想マシン管理者* -- OpenShift Virtualizationで仮想ゲストの日々の管理を担当している方。このようなユーザーは、仮想ゲストのプロビジョニング、ゲストとその中で実行されるアプリケーションの日々の管理を担当することが多いでしょう。
 
-*Virtual Infrastructure Administrators* -- Those responsible for the physical infrastructure hosting the OpenShift Virtualization solution. These users will be responsible for physical hardware, storage, and networking changes to the environment, that will affect the day to day operations of the running virtual machines.
+*仮想インフラストラクチャ管理者* -- OpenShift Virtualizationソリューションをホストする物理インフラストラクチャの責任者。これらのユーザーは、実行中の仮想マシンの日々の運用に影響を与える、環境に対する物理ハードウェア、ストレージ、ネットワークの変更に責任を負います。
 
 
-== What Content Is Covered In The Roadshow?
+== ロードショーでカバーされる内容は？
 
-These are the *eight* main sections that will be covered:
+ロードショーで扱う主な内容は以下の8つです:
 
-* _Virtual Machine Management_: In this section we will provide a review of virtual machine management fundamentals, including creating a virtual machine, and modifying it's allotted resources.
+* _仮想マシンの管理_ ：仮想マシンの作成、割り当てリソースの変更など、仮想マシン管理の基本について説明します。
 
-* _Migrating Existing Virtual Machines_: In this section, we will use the Migration Toolkit for Virtualization (MTV) to migrate a VM from an existing VMware vSphere environment to OpenShift Virtualization.
+* _既存の仮想マシンの移行_: このセクションでは、Migration Toolkit for Virtualization (MTV) を使用して、既存の VMware vSphere 環境から OpenShift Virtualization へ仮想マシンを移行します。
 
-* _Bare Metal Infrastructure Management_: In this section, an administrator will learn how to scale their OpenShift environment by adding in an additional worker node to host virtualized workloads.
+* _ベアメタル・インフラストラクチャの管理_: このセクションでは、管理者が仮想化ワークロードをホストするために追加のワーカーノードを追加することで OpenShift 環境を拡張する方法を学びます。
 
-* _Storage Management_: The storage paradigm familiar to many administrators changes with OpenShift Virtualization, this section will explore many actions related to storage management for virtual machines.
+* _ストレージ管理_: 多くの管理者に馴染みのあるストレージのパラダイムが OpenShift Virtualization で変わります。このセクションでは、仮想マシンのストレージ管理に関連する多くのアクションを探ります。
 
-* _Backup and Recovery for Virtual Machines_: This unit introduces and demonstrates additional concepts around backing up VMs to external sites and restoring them in the event of a disaster.
+* _仮想マシンのバックアップとリカバリ_: このユニットでは、仮想マシンの外部サイトへのバックアップと災害時のリストアに関する追加コンセプトを紹介し、デモンストレーションを行います。
 
-* _Network Management_: By default VMs are connected to the pod network in OpenShift, in this section we will explore creating new L2 network mappings, and configuring microsegmentation policies for multiple networks.
+* _ネットワーク管理_: デフォルトでは、VM は OpenShift のポッドネットワークに接続されています。このセクションでは、新しい L2 ネットワークマッピングの作成と、複数のネットワークに対するマイクロセグメンテーションポリシーの設定について説明します。
 
-* _Template and InstanceType Management_: In order to streamline deployment of virtual machines, administrators will often create Templates or define InstanceTypes to ease deployment operations. This section will focus on those processes.
+* _テンプレートとインスタンスタイプの管理_: 仮想マシンのデプロイを効率化するために、管理者はデプロイ操作を容易にするために、Templateを作成したり、InstanceTypeを定義したりすることがよくあります。このセクションでは、これらのプロセスについて説明します。
 
-* _Working with Virtual Machines and Applications_: In this section we will perform several day-2 activities with our imported virtual machines, including setting up a load-balancer, and exposing our VM hosted applications through services and routes.
+* _仮想マシンとアプリケーションの操作_: このセクションでは、インポートした仮想マシンを使用して、ロードバランサーのセットアップや、サービスやルートを通じて仮想マシンがホストするアプリケーションの公開など、2日目のアクティビティをいくつか実行します。
 
-== Version Information
+== バージョン情報
 
-This edition of the  OpenShift Virtualization Roadshow has been developed using the following software versions:
+この OpenShift 仮想化ロードショーのエディションは、以下のソフトウェア・バージョンを使用して開発されています：
 
 * Red Hat OpenShift 4.16.5
 * Red Hat OpenShift Virtualization 4.16.1
@@ -48,4 +48,4 @@ This edition of the  OpenShift Virtualization Roadshow has been developed using 
 * Red Hat OADP 1.4.0
 * Red Hat Migration Toolkit for Virtual Machines 2.6.3
 
-(Accurate as of Aug 16, 2024)
+(2024年8月16日現在の情報です)
