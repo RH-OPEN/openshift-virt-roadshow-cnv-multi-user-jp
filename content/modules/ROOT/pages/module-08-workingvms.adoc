@@ -97,12 +97,12 @@ image::module-08-workingvms/17_Route_Navigation.png[link=self, window=blank, wid
 
 . 以下の情報をフォームに入力し、完了したら *Create* を押します。
 +
-.. *Name*: *route-webapp*
-.. *Service*: *webapp*
-.. *Target port*: *80 -> 80 (TCP)*
-.. *Secure Route*: *Enabled*
-.. *TLS termination*: *Edge*
-.. *Insecure traffic*: *Redirect*
+.. Name: *route-webapp*
+.. Service: *webapp*
+.. Target port: *80 -> 80 (TCP)*
+.. Secure Route: *Enabled*
+.. TLS termination: *Edge*
+.. Insecure traffic: *Redirect*
 +
 image::module-08-workingvms/18_Create_Route.png[link=self, window=blank, width=100%]
 

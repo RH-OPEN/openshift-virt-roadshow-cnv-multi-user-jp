@@ -16,7 +16,7 @@ image::module-04-storage/00_disk_concepts.png[link=self, window=blank, width=100
 
 . まず、左メニューの *Storage* -> *Persistent Volume Claims* をクリックします。 *vmexamples-{user}* ネームスペースにいることを確認してください。前のセクションで *fedora01* VM を作成したときに作成された *fedora01* PVC が表示されているはずです。
 +
-. fedora01* PVC をクリックすると、VM をバックアップしているストレージ・ボリュームの詳細が表示されます。
+. *fedora01* PVC をクリックすると、VM をバックアップしているストレージ・ボリュームの詳細が表示されます。
 +
 . 永続ボリュームの請求に関する以下の情報に注目してください：
 .. PVCは現在正常にバインドされています。
@@ -34,7 +34,7 @@ OpenShift Virtualization は、仮想マシンのディスク・スナップシ�
 
 ディスクスナップショットは CSI によって抽象化されたストレージ実装に依存するため、パフォーマンスへの影響と使用容量はストレージプロバイダに依存します。システムがPVCスナップショットをどのように管理するか、また、PVCスナップショットが与える影響と与えない影響について、ストレージ・ベンダーと協力して確認してください。
 
-重要
+[IMPORTANT]
 ====
 スナップショットは、それ自体ではバックアップやディザスタリカバリの機能ではありません。ストレージ・システムの障害から復旧するには、別の場所に保存された1つ以上のコピーなど、他の方法でデータを保護する必要があります。
 
@@ -108,7 +108,7 @@ image::module-04-storage/10_Bootloader_Broken.png[link=self, window=blank, width
 +
 image::module-04-storage/11_VM_Stopped_Snapshot.png[link=self, window=blank, width=100%]
 
-. Snapshots*タブに戻り、3つの点のメニューをクリックして、VMが停止している状態で、*Restore* がグレーアウトしていないことを確認する。それをクリックする。
+. *Snapshots* タブに戻り、3つの点のメニューをクリックして、VMが停止している状態で、*Restore* がグレーアウトしていないことを確認する。それをクリックする。
 +
 image::module-04-storage/12_VM_Restore.png[link=self, window=blank, width=100%]
 

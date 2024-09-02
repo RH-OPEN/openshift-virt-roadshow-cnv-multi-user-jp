@@ -7,7 +7,7 @@
 *Templates* ページには、4 種類の仮想マシンテンプレートが表示されます：
 
 * *Red Hat Supported* テンプレートは Red Hat によって完全にサポートされています。
-* *Red Hat Supported* テンプレートは Red Hat によって完全にサポートされています。
+* *User Supported* テンプレートは、ユーザーがクローンして作成した*Red Hat Supported* テンプレートです。
 * *Red Hat Provided* テンプレートは、Red Hat によって限定的にサポートされます。
 * *User Provided* テンプレートは、ユーザーがクローンして作成した *Red Hat Provided* テンプレートです。
 
@@ -40,11 +40,11 @@ image::module-07-tempinst/02_Search_Centos9.png[link=self, window=blank, width=1
 
 image::module-07-tempinst/03_Create_Custom_Template.png[link=self, window=blank, width=100%]
 
-. *テンプレートのクローン* という新しいメニューが表示されるので、以下の値を入力し、完了したら[*クローン*]ボタンをクリックします。
+. *Clone template* という新しいメニューが表示されるので、以下の値を入力し、完了したら *Clone* ボタンをクリックします。
 +
-* テンプレート名:* centos-stream9-server-db-small
-* テンプレートプロジェクト:* vmexamples-{user}
-* *テンプレート表示名:* CentOS Stream 9 VM - Database Template Small
+* *Template name:* centos-stream9-server-db-small
+* *Template project:* vmexamples-{user}
+* *Template display name:* CentOS Stream 9 VM - Database Template Small
 +
 image::module-07-tempinst/04_Clone_Template_Options.png[link=self, window=blank, width=100%]
 
@@ -112,7 +112,7 @@ image::module-07-tempinst/15_MariaDB_Login.png[link=self, window=blank, width=10
 
 このラボのこのセグメントでは、Web サーバー上でホストされている ISO を使用して Microsoft Windows Server 2019 をインストールします。これは、Web サーバー、オブジェクトストレージ、またはクラスタ内の他の永続ボリュームなど、多くの場所からディスクをソースとする機能を利用する仮想マシンにオペレーティングシステムをインストールする方法の 1 つです。
 
-このプロセスは、最初のオペレーティングシステムのインストール後に、他のテンプレートで使用するために、シスプリされた仮想マシンからクローンされたルートディスクを作成することによって合理化できます。
+このプロセスは、最初のオペレーティングシステムのインストール後に、他のテンプレートで使用するために、Sysprepされた仮想マシンからクローンされたルートディスクを作成することによって合理化できます。
 
 NOTE: テンプレートとして使用するゲストOSを準備する具体的なプロセスは異なります。テンプレートOSを準備する場合は、必ず組織のガイドラインと要件に従ってください。
 
@@ -133,12 +133,12 @@ image::module-07-tempinst/17_Windows_2k19_Dialog.png[link=self,window=blank,widt
 +
 . このダイアログでは
 .. *win-sysprep* という名前を指定します。
-.. チェックボックス *CDから起動* を有効にする。
-.. ドロップダウンメニューからURL *(PVCを作成)* を選択します。
-.. *画像のURL* を指定します: https://catalog-item-assets.s3.us-east-2.amazonaws.com/qcow_images/Windows2019.iso
-.. CDディスクのサイズを *5GiB* に縮小する。
-.. *ディスク・ソース* サイズのディスクをデフォルト値 *60 GiB* に設定したままにする。
-.. *Windowsドライバディスクをマウントする* チェックボックスが有効になっていることを確認します。これは、VirtIO 用のドライバーを提供する Windows システムをインストールするために必要です。
+.. チェックボックス *Boot from CD* を有効にする。
+.. ドロップダウンメニューから *URL (creates PVC)* を選択します。
+.. *Image URL* を指定します: https://catalog-item-assets.s3.us-east-2.amazonaws.com/qcow_images/Windows2019.iso
+.. Disk size *5GiB* に縮小する。
+.. *Disk source* サイズのディスクをデフォルト値 *60 GiB* に設定したままにする。
+.. *Mount Windows drivers disk* チェックボックスが有効になっていることを確認します。これは、VirtIO 用のドライバーを提供する Windows システムをインストールするために必要です。
 +
 
 . オプションの入力が完了したら、下部にある *Customize VirtualMachine* ボタンをクリックして、Template の設定を続行します。
@@ -302,7 +302,7 @@ image::module-07-tempinst/21_Sysprep.png[link=self, window=blank, width=100%]
 </unattend>
 ----
 
-. コードが貼り付けられたら、ダイアログの *保存* ボタンをクリックします。
+. コードが貼り付けられたら、ダイアログの *Save* ボタンをクリックします。
 +
 image::module-07-tempinst/22_Windows_2k19_Sysprep.png[link=self, window=blank, width=100%]
 
@@ -332,13 +332,13 @@ image::module-07-tempinst/27_Stop_Button.png[link=self, window=blank, width=100%
 +
 image::module-07-tempinst/28_Storage_PVC.png[link=self, window=blank, width=100%]
 
-. 表示されている *windows* PVCを見つけ、右側の3点メニューから *Clone PVC* を選択します。ポップアップするメニューで、新しいPVCに *windows-2k19-sysprep-template* という名前を付け、*アクセスモード* を *共有アクセス(RWX)* に設定し、*Clone* ボタンをクリックします。
+. 表示されている *windows* PVCを見つけ、右側の3点メニューから *Clone PVC* を選択します。ポップアップするメニューで、新しいPVCに *windows-2k19-sysprep-template* という名前を付け、*アクセスモード* を *Shared access(RWX)* に設定し、*Clone* ボタンをクリックします。
 +
 image::module-07-tempinst/29_Clone_Menu.png[link=self, window=blank, width=100%]
 
 . 一度これを保存しておけば、今後Windows VMを素早く作成するのに使うことができる。
 
-. *仮想化* -> *カタログ* メニューに戻り、*ディスク・ソース* として *PVC(クローンPVC)* のオプションを選択し、クローンする *PVC名* として *Windows-2k19-Sysprep-Template* PVCを選択し、*Quick create VirtualMachine* ボタンをクリックして、新しい仮想マシンをクイック作成するためのブート・ソースとしてこのクローンPVCを使用します。
+. *仮想化* -> *カタログ* メニューに戻り、*ディスク・ソース* として *PVC(clone PVC)* のオプションを選択し、クローンする *PVC name* として *Windows-2k19-Sysprep-Template* PVCを選択し、*Quick create VirtualMachine* ボタンをクリックして、新しい仮想マシンをクイック作成するためのブート・ソースとしてこのクローンPVCを使用します。
 +
 image::module-07-tempinst/30_Windows_Template.png[link=self, window=blank, width=100%]
 

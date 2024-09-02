@@ -125,13 +125,13 @@ image::module-02-mtv/17_VM_Select_VMWARE_Plan.png[link=self, window=blank, width
 +
 移行プランに以下の値を入力してください：
 
-* プラン名 プラン名： *move-webapp-vmware*
-* ターゲットプロバイダー ターゲットプロバイダー: *host*
-* ターゲット名前空間 ターゲット名前空間: *vmexamples-{user}*
-* ネットワークマップ ネットワークマップ：*Pod Networking*
-* ストレージマップ： *OCS-EXTERNAL-STORAGECLUSTER-CEH-RBD*
+* Plan name: *move-webapp-vmware*
+* Target provider: *host*
+* Target namespace: *vmexamples-{user}*
+* Network map: *Pod Networking*
+* Storage map: *ocs-external-storagecluster-ceph-rbd*
 +
-注： ネットワークマップとストレージマップの両方が、検出された仮想マシンがソースプロバイダ上で現在使用しているネットワークとデータストアを自動的に検出します。OpenShift 側でそれぞれの値が正しく設定されていることを確認する必要があります。
+NOTE: ネットワークマップとストレージマップの両方が、検出された仮想マシンがソースプロバイダ上で現在使用しているネットワークとデータストアを自動的に検出します。OpenShift 側でそれぞれの値が正しく設定されていることを確認する必要があります。
 
 . *Create migration plan* をクリックします。
 +

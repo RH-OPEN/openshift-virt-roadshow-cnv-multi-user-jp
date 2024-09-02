@@ -7,14 +7,14 @@ OpenShift仮想化で仮想マシンのバックアップとリカバリのた�
 Red Hat ソリューションには以下が含まれます：
 
 * https://docs.openshift.com/container-platform/4.15/backup_and_restore/application_backup_and_restore/oadp-features-plugins.html[*OADP (OpenShift APIs for Data Protection)*]： 仮想マシンを含む OpenShift オブジェクトをバックアップおよびリストアするための、ストレージに依存しない方法を提供する Red Hat Operator。
-* https://access.redhat.com/documentation/en-us/red_hat_openshift_data_foundation/4.15/html/configuring_openshift_data_foundation_disaster_recovery_for_openshift_workloads/metro-dr-solution/[*OpenShift Data Foundation Metro-DR*].
+* https://access.redhat.com/documentation/en-us/red_hat_openshift_data_foundation/4.15/html/configuring_openshift_data_foundation_disaster_recovery_for_openshift_workloads/metro-dr-solution/[*OpenShift Data Foundation Metro-DR*]
 
 エコシステム・パートナー・ソリューション
 
 * https://portworx.com/blog/disaster-recovery-for-red-hat-openshift-virtualization/[*Portworx Disaster Recovery for OpenShift Virtualization*] 
-* https://storware.eu/solutions/virtual-machine-backup-and-recovery/openshift-virtualization-and-kubevirt/[*Storware Backup and Recovery*] (*Storware Backup and Recovery*)
+* https://storware.eu/solutions/virtual-machine-backup-and-recovery/openshift-virtualization-and-kubevirt/[*Storware Backup and Recovery*] 
 * https://docs.trilio.io/kubernetes/appendix/backup-and-restore-virtual-machine-running-on-openshift-virtualization[*Trilio for Kubernetes*]
-* https://docs.kasten.io/latest/usage/openshift_virtualization.html[*VEEAM Kasten*].
+* https://docs.kasten.io/latest/usage/openshift_virtualization.html[*VEEAM Kasten*]
 
 NOTE: これは、サポートされているバックアップとリカバリのソリューションを提供するパートナーの網羅的なリストを意図したものではありません。ストレージまたはデータ保護ベンダーに問い合わせて、その製品と OpenShift Virtualization との互換性を確認してください。
 

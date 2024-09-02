@@ -11,18 +11,18 @@
 * OpenShift コンソールを使用して VM の電源状態がどのように管理されるかを理解する。
 * 2つのホスト間でVMをライブマイグレートする
 
-リマインダーとして、ここに OpenShift コンソールの認証情報があります：
+リマインダーとして、OpenShift コンソールの認証情報は下記です：
 
-OpenShift クラスタコンソールは {console_url}[here^] で利用可能です。
+OpenShift クラスタコンソールは {console_url}[こちら^] で利用可能です。
 
 ログインには以下の認証情報をお使いください。
 
 * *User:* {user}
 * *Password:* {password}
 
-== 管理者ビューに切り替える
+== Administratorパースペクティブに切り替える
 
-ログイン後、あなたは開発者ビューに表示されます、 
+ログイン後、Developerパースペクティブが表示されます。
 
 [[create_project]]
 == 新規プロジェクトの作成
@@ -30,7 +30,7 @@ OpenShift クラスタコンソールは {console_url}[here^] で利用可能で
 OpenShiftの他のオブジェクトと同様に、プロジェクト（Kubnernetesの名前空間を抽象化したもの）は、パーミッションやリソースを使用・管理するための境界線となります。Projectの作成はデプロイの重要な第一歩です。
 
 . 初めてコンソールにログインすると、*Developer* パースペクティブが表示されます。プロンプトを表示させないようにするには、*Skip tour* をクリックします。次に、*Developer* をクリックし、*Administrator* に切り替えます。
-
++
 image::module-01-intro/00_Admin_Perpspective.png[link=self, window=blank, width=100%]
 
 . 左のナビゲーションメニューを使用して、*Virtualization* -> *VirtualMachines* をブラウズします：
