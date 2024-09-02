@@ -5,21 +5,21 @@
 このセクションでは、多くの管理者が OpenShift 仮想化環境で仮想マシンを操作する際に必要となる Day-2 の操作について説明します。このロードショーを通して培った、OpenShift 環境で VM がどのように動作するかについての理解を活用し、このセクションのタスクを完了するためにそれらのスキルを使用します。この特定のケースでは、このロードショーで以前に VMware vSphere からインポートした 3 つの仮想マシンを使って作業し、OpenShift Virtualization で現在実行されているように、これらのサーバー上でホストされているアプリケーションにアクセスできるようにするために、いくつかの小さな設定変更を行うつもりです。これを達成するために、OpenShift SDN ポッドネットワークを利用するときのデフォルトである service/route メソッドを使ってアプリケーションを公開し、アプリケーションがクラスタの外から到達できるようにします。
 
 [[service_route]]
-== サービス/ルートでアプリケーションを公開する
+== Service/Routeでアプリケーションを公開する
 
-デフォルトでは、仮想マシンは SDN に接続されており、残りのネットワークにアクセスするための便利で簡単な方法ですが、仮想マシンや OpenShift クラスタ内の他のポッドが仮想化アプリケーションを見つけて接続するのは難しいかもしれません。これを解決するために、2つのWindowsベースのWebサーバー間で接続のバランスをとるために *Service* を使用し、各サービスディスカバリーのDNSエントリーを作成し、外部クライアントが仮想マシン内でホストされているアプリケーションにアクセスできるように *Route* を作成します。
+デフォルトでは、仮想マシンは SDN に接続されており、残りのネットワークにアクセスするための便利で簡単な方法ですが、仮想マシンや OpenShift クラスタ内の他のポッドが仮想化アプリケーションを見つけて接続するのは難しいかもしれません。これを解決するために、2つのWindowsベースのWebサーバー間で接続のバランスをとるために *Service* を使用し、各ServiceディスカバリーのDNSエントリーを作成し、外部クライアントが仮想マシン内でホストされているアプリケーションにアクセスできるように *Route* を作成します。
 
 IMPORTANT: 「既存の仮想マシンの移行」モジュールを完了していない場合は、そのモジュールを最初に実行することをお勧めします。このモジュールが完了していない場合、または移行プロセスがまだ保留中の場合は、*vmimported* プロジェクトで利用可能な既存の仮想マシンを使用できます。これらのインポート済み仮想マシンを使用する場合は、以下の例の *vmexamples* ネームスペースのインスタンスをすべて *vmimported* に置き換えてください。
 
-=== サービスの紹介
+=== Serviceの紹介
 
-*Services* は、ラベルに基づいてトラフィックのソース/ターゲットを特定し、クライアントをエンドポイントに誘導します。現在、VMにはまだラベルが割り当てられていない。
+*Service* は、ラベルに基づいてトラフィックのソース/ターゲットを特定し、クライアントをエンドポイントに誘導します。現在、VMにはまだラベルが割り当てられていない。
 
-VMをサービスとうまく関連付けるには、以下のことを行う必要がある:
+VMをServiceとうまく関連付けるには、以下のことを行う必要がある:
 
 * VMにラベルを追加する。VMにラベルを追加する。両方のWindows IISサーバーは同じロードバランサーの後ろにあるため、同じラベルを使用する。
-* 2つのWindows IISサーバーをクラスタ上の他のワークロードで利用できるようにするためにサービスを作成します。OpenShift は自動的に DNS 名としてサービス名を使用してロードバランサーを内部的にアクセス可能にします。
-* *ルート* を作成することで、OpenShift の外部でサービスを利用できるようにします。
+* 2つのWindows IISサーバーをクラスタ上の他のワークロードで利用できるようにするためにServiceを作成します。OpenShift は自動的に DNS 名としてService名を使用してロードバランサーを内部的にアクセス可能にします。
+* *Route* を作成することで、OpenShift の外部でServiceを利用できるようにします。
 
 まず始めに、OpenShift Virtualization GUI で仮想マシンの定義を変更することで、仮想マシンにラベルを追加します。
 
@@ -50,7 +50,7 @@ image::module-08-workingvms/12_Imported_VMs_YAML.png[link=self, window=blank, wi
 +
 NOTE: 各仮想マシンのコンソールタブにアクセスして、仮想マシンが正しく動作していることを確認します。
 
-=== サービスの作成
+=== Serviceの作成
 
 . *Networking* -> *Services* に移動し、*Create Service* を押します。
 +
@@ -74,22 +74,22 @@ spec:
     targetPort: 80
 ----
 +
-IMPORTANT: *vmexamples-{user}* または *vmimported-{user}* という仮想マシンの *nameespace* が、サービス YAML で使用されているものであることを確認してください。
+IMPORTANT: *vmexamples-{user}* または *vmimported-{user}* という仮想マシンの *nameespace* が、Service YAML で使用されているものであることを確認してください。
 +
 image::module-08-workingvms/14_Service_YAML.png[link=self, window=blank, width=100%]
 
 . *Create* を押します。
-. 新しく作成された *webapp* サービスの詳細ページから、*Podセレクタ* リンクを探し、クリックします。
+. 新しく作成された *webapp* Serviceの詳細ページから、*Podセレクタ* リンクを探し、クリックします。
 +
 image::module-08-workingvms/15_Imported_VMs_PodSelector.png[link=self, window=blank, width=100%]
 
-. 2つのWindows VMが適切に識別され、サービスのターゲットになっていることを確認します。
+. 2つのWindows VMが適切に識別され、Serviceのターゲットになっていることを確認します。
 +
 image::module-08-workingvms/16_Imported_VMs_Pods.png[link=self, window=blank, width=100%]
 
-=== ルートの作成
+=== Routeの作成
 
-これで、OpenShiftクラスタ内からWindows IISサーバにアクセスできるようになりました。他の仮想マシンは、サービス名 + ネームスペースで決まる DNS 名 *webapp.vmexamples* を使ってアクセスできます。しかし、これらの Web サーバーは外部からアクセスできるようにしたいアプリケーションのフロントエンドなので、*Route* を使って公開します。
+これで、OpenShiftクラスタ内からWindows IISサーバにアクセスできるようになりました。他の仮想マシンは、Service名 + ネームスペースで決まる DNS 名 *webapp.vmexamples* を使ってアクセスできます。しかし、これらの Web サーバーは外部からアクセスできるようにしたいアプリケーションのフロントエンドなので、*Route* を使って公開します。
 
 . 左のナビゲーション・メニューから *Networking* -> *Routes* に移動し、正しいプロジェクト名を使用していることを確認します。*Create Route* を押します。
 +
@@ -114,7 +114,7 @@ image::module-08-workingvms/19_Route_Access.png[link=self, window=blank, width=1
 +
 image::module-08-workingvms/20_WebApp_Error.png[link=self, window=blank, width=100%]
 +
-NOTE: 接続性の問題を解決するには、データベースVM用のサービスを作成して、ウェブサーバーからアクセスできるようにする必要があります。
+NOTE: 接続性の問題を解決するには、データベースVM用のServiceを作成して、ウェブサーバーからアクセスできるようにする必要があります。
 
 . もう一度、*Networking* -> *Services* に移動し、*Create Service* を押す。YAMLを以下の定義に置き換える:
 +
@@ -134,13 +134,13 @@ spec:
     targetPort: 3306
 ----
 +
-NOTE: 今回、作成するサービスにアタッチするために仮想マシンの名前を使用しました。この名前を持つネームスペースには *database* という名前の VM が 1 つしかないので、VM の YAML をカスタマイズしたりゲストを再起動したりしなくても安全です。
+NOTE: 今回、作成するServiceにアタッチするために仮想マシンの名前を使用しました。この名前を持つネームスペースには *database* という名前の VM が 1 つしかないので、VM の YAML をカスタマイズしたりゲストを再起動したりしなくても安全です。
 +
 image::module-08-workingvms/21_Database_YAML.png[link=self, window=blank, width=100%]
 
 . YAMLが貼り付けられたら、*Create* ボタンをクリックする。
 +
-IMPORTANT: 仮想マシンの名前空間 *vmexamples-{user}* または *vmimported-{user}* がサービス YAML で使用されているものであることを確認してください。
+IMPORTANT: 仮想マシンの名前空間 *vmexamples-{user}* または *vmimported-{user}* がService YAML で使用されているものであることを確認してください。
 +
 . ウェブアプリのURLをリロードし、適切な結果が得られることを期待します。
 +

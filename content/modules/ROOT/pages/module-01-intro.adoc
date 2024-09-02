@@ -136,7 +136,7 @@ image::module-01-intro/14_Network_Tab.png[link=self,window=blank,width=100%]
 +
 VM が作成されると、デフォルトで *PodNetworking* ネットワーク上に *masquerade* タイプのインターフェースが作成される。これは VM を SDN に接続し、VM から OpenShift クラスタ外へのアクセスを提供する。クラスタ内の他の VM や Pod はこのインターフェースを使用して仮想マシンにアクセスできる。さらに、SDN に接続された VM は、Route を使って外部にアクセスしたり、ロードバランサータイプの Service を使ったり、外部ネットワークに直接アクセスできるように Network Attachment Definition を設定することもできる。
 
-[vm_state]
+[[vm_state]]
 == 仮想マシンの状態の制御
 
 仮想化へのアクセス権限を持つユーザーとして、Webコンソールから仮想マシンを停止、起動、再起動、一時停止、および一時停止解除できます。
