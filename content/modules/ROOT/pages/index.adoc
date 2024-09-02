@@ -1,93 +1,93 @@
-= Welcome to {lab_name}!
+= {lab_name}へようこそ！
 
 [%hardbreaks]
-== Introduction
-OpenShift Virtualization enables you to bring virtual machines onto a modern, Kubernetes-based infrastructure. It enables the development and delivery of new applications as well as the modernization of existing ones and can create applications that consist of virtual machines, containers, and serverless functions - all managed together using Kubernetes-native tools and paradigms.
+== はじめに
+OpenShift Virtualization は、最新の Kubernetes ベースのインフラストラクチャ上に仮想マシンを導入することを可能にします。また、仮想マシン、コンテナ、サーバーレス機能で構成されるアプリケーションを作成することができ、これらはすべて Kubernetes ネイティブのツールとパラダイムを使用して一緒に管理されます。
 
-This roadshow event is organized to allow you to have a hands-on experience with Red Hat OpenShift Virtualization.
+このロードショー・イベントは、Red Hat OpenShift Virtualization を実際に体験していただくために企画されました。
 
-In this event we will explore many common management activities that virtualization administrators often encounter in their day to day workflows.
+このイベントでは、仮想化管理者が日々のワークフローでよく遭遇する多くの一般的な管理アクティビティを探ります。
 
-== Who Will Benefit Most from attending a Roadshow?
+== ロードショーに参加することで最も恩恵を受けるのは誰ですか？
 
-*Virtual Machine Administrators* -- Those responsible for day to day management of virtual guests in OpenShift Virtualization. These users will often find themselves responsible for provisioning virtual guests, and day to day management of the guests, and the applications running within.
+*仮想マシン管理者* -- OpenShift Virtualizationで仮想ゲストの日々の管理を担当している方。このようなユーザーは、仮想ゲストのプロビジョニング、ゲストとその中で実行されるアプリケーションの日々の管理を担当することが多いでしょう。
 
-*Virtual Infrastructure Administrators* -- Those responsible for the physical infrastructure hosting the OpenShift Virtualization solution. These users will be responsible for physical hardware, storage, and networking changes to the environment, that will affect the day to day operations of the running virtual machines.
+*仮想インフラストラクチャ管理者* -- OpenShift Virtualizationソリューションをホストする物理インフラストラクチャの責任者。これらのユーザーは、実行中の仮想マシンの日々の運用に影響を与える、環境に対する物理ハードウェア、ストレージ、ネットワークの変更に責任を負います。
 
-== What Content Is Covered In The Roadshow?
+== ロードショーでカバーされる内容は？
 
-// These are the *eight* main sections that will be covered:
-These are the *six* main sections that will be covered:
+// ロードショーでカバーされる内容は？
+ロードショーで取り上げる主なセクションは以下の6つです：
 
-* _Virtual Machine Management_: In this section we will provide a review of virtual machine management fundamentals, including creating a virtual machine, and modifying it's allotted resources.
+* 仮想マシン管理 仮想マシンの管理_：このセクションでは、仮想マシンの作成や割り当てリソースの変更など、仮想マシン管理の基本について説明します。
 
-* _Migrating Existing Virtual Machines_: In this section, we will use the Migration Toolkit for Virtualization (MTV) to migrate a VM from an existing VMware vSphere environment to OpenShift Virtualization.
+* 既存の仮想マシンの移行 このセクションでは、Migration Toolkit for Virtualization (MTV) を使用して、既存の VMware vSphere 環境から OpenShift Virtualization へ仮想マシンを移行します。
 
-* _Storage Management_: The storage paradigm familiar to many administrators changes with OpenShift Virtualization. This section will explore many actions related to storage management for virtual machines.
+* ストレージ管理 多くの管理者に馴染みのあるストレージのパラダイムは、OpenShift Virtualization によって変わります。このセクションでは、仮想マシンのストレージ管理に関連する多くのアクションを探ります。
 
-* _Backup and Recovery for Virtual Machines_: This unit introduces and demonstrates additional concepts around backing up VMs to external sites and restoring them in the event of a disaster.
+* 仮想マシンのバックアップとリカバリ 仮想マシンのバックアップとリカバリ_: このユニットでは、仮想マシンを外部サイトにバックアップし、災害時にリストアすることに関する追加の概念を紹介し、実演します。
 
-* _Template and InstanceType Management_: In order to streamline deployment of virtual machines, administrators will often create Templates or define InstanceTypes to ease deployment operations. This section will focus on those processes.
+* テンプレートとインスタンスタイプの管理 テンプレートとインスタンスタイプの管理_： 仮想マシンのデプロイを効率化するために、管理者はデプロイ作業を容易にするために、テ ンプレートを作成したり、インスタンスタイプを定義したりします。このセクションでは、これらのプロセスについて説明します。
 
-* _Working with Virtual Machines and Applications_: In this section we will perform several day-2 activities with our imported virtual machines, including setting up a load-balancer, and exposing our VM hosted applications through services and routes.
+* 仮想マシンとアプリケーションの操作 このセクションでは、インポートした仮想マシンを使って、ロードバランサーのセットアップや、サービスやルートを通じて VM ホストのアプリケーションを公開するなど、2 日目のアクティビティをいくつか実行します。
 
-== What is OpenShift Virtualization?
+== OpenShift 仮想化とは？
 
-* OpenShift Virtualization is a feature of Red Hat OpenShift; it is not an add-on or a separate product and is included with all entitlements.
-* All current subscribers receive OpenShift Virtualization as part of their OpenShift subscription. It has been generally available since OpenShift 4.5.
-* OpenShift Virtualization is based on the “container-native virtualization” technology being developed upstream under the KubeVirt project, a sandbox project in the Cloud Native Computing Foundation (CNCF).
-* It leverages the Red Hat Enterprise Linux KVM hypervisor (RHEL KVM), which is a mature and highly performant open-source hypervisor used by many organizations and cloud service providers globally and which has been under development for over 15 years.
-* OpenShift Virtualization leverages the RHEL KVM hypervisor and allows the VM to be managed by Kubernetes and KubeVirt. An OpenShift Virtualization VM uses Kubernetes scheduling, network, and storage infrastructure.
-* OpenShift Virtualization includes entitlements for **unlimited virtual RHEL guests**. Guest licensing for other supported operating systems will need to be purchased separately.
-* OpenShift Virtualization is SVVP certified with Microsoft for Windows guest support per the same rules that apply to Red Hat’s other KVM virtualization offerings.
-* OpenShift Virtualization is currently only supported on bare metal physical servers, typically on-premises or through dedicated hosting. Support for other topologies (OpenShift deployed on virtualized infrastructure like RHV or vSphere) is not available at this time.
-* Support for https://www.redhat.com/en/blog/managing-virtual-machines-and-containers-as-code-with-openshift-virtualization-on-red-hat-openshift-service-on-aws[AWS / ROSA^] has already been announced, and we are in the process of adding support for OpenShift Virtualization to additional Managed OpenShift Cloud services.
-* OpenShift Virtualization allows OpenShift to deploy, manage, and connect virtual machines to an OpenShift cluster. This includes the ability to connect to and manage those VMs using Kubernetes-native methods and take advantage of OpenShift features like Pipelines, GitOps, Service Mesh, and more.
+* OpenShift Virtualization は Red Hat OpenShift の機能であり、アドオンや別の製品ではなく、すべての資格に含まれています。
+* 現在のすべてのサブスクライバーは、OpenShift サブスクリプションの一部として OpenShift Virtualization を受け取ります。OpenShift 4.5 以降、一般的に利用可能です。
+* OpenShift Virtualization は、Cloud Native Computing Foundation (CNCF) のサンドボックス・プロジェクトである KubeVirt プロジェクトの上流で開発されている「コンテナネイティブ仮想化」技術に基づいています。
+* Red Hat Enterprise Linux KVM ハイパーバイザー（RHEL KVM）を活用します。このハイパーバイザーは、世界中の多くの組織やクラウドサービスプロバイダーで使用されており、15 年以上にわたって開発が続けられている、成熟した高性能なオープンソースハイパーバイザーです。
+* OpenShift VirtualizationはRHEL KVMハイパーバイザーを活用し、VMをKubernetesとKubeVirtで管理できるようにする。OpenShift Virtualization VMは、Kubernetesのスケジューリング、ネットワーク、ストレージのインフラを使用します。
+* OpenShift Virtualizationには、**無制限の仮想RHELゲスト**用のエンタイトルメントが含まれています。他のサポートされているオペレーティングシステムのゲストライセンスは別途購入する必要があります。
+* OpenShift Virtualization は、Red Hat の他の KVM 仮想化製品に適用されるのと同じ規則に従って、Windows ゲストのサポートについて Microsoft の SVVP 認証を受けています。
+* OpenShift Virtualization は現在、通常オンプレミスまたは専用ホスティングによるベアメタル物理サーバー上でのみサポートされています。その他のトポロジー（RHV や vSphere のような仮想化インフラ上にデプロイされた OpenShift）のサポートは、現時点では提供されていません。
+* https://www.redhat.com/en/blog/managing-virtual-machines-and-containers-as-code-with-openshift-virtualization-on-red-hat-openshift-service-on-aws[AWS / ROSA^]のサポートは既に発表されており、追加のマネージドOpenShiftクラウドサービスにOpenShift仮想化のサポートを追加しているところです。
+* OpenShift Virtualization は OpenShift が仮想マシンを OpenShift クラスタにデプロイ、管理、接続することを可能にします。これには、Kubernetes ネイティブのメソッドを使用してこれらの VM に接続して管理し、Pipelines、GitOps、Service Mesh などの OpenShift 機能を利用する機能が含まれます。
 
-== Why switch from a traditional VM platform?
+== 従来のVMプラットフォームから乗り換える理由
 
-**Adopt cloud-native development and/or cloud-native operations:**
-Red Hat OpenShift helps your team build applications with speed, agility, confidence, and choice. Code in production mode, anywhere you choose to build. Get back to doing work that matters.
+**クラウドネイティブ開発および/またはクラウドネイティブ運用の採用:**
+Red Hat OpenShift は、スピード、俊敏性、信頼性、そして選択肢を備えたアプリケーションの構築を支援します。構築する場所を選ばず、本番モードでコードを作成できます。重要な仕事に集中できます。
 
-**Complete app dev stack:**
-Red Hat OpenShift Dev Spaces (formerly Red Hat CodeReady Workspaces), Runtimes, Integration and Process Automation, Serverless, Pipelines, and more with security throughout.
+**完全なアプリケーション開発スタック:**
+Red Hat OpenShift Dev Spaces (旧 Red Hat CodeReady Workspaces)、ランタイム、インテグレーションとプロセス自動化、サーバーレス、パイプラインなど、全体を通してセキュリティが確保されています。
 
-**Shift infrastructure spend to innovation:**
-OpenShift native architecture changes the heavyweight cost structure from SDDC legacy to lightweight container-native frameworks.
+**インフラの支出をイノベーションにシフト: ** 
+OpenShiftのネイティブ・アーキテクチャは、重いインフラストラクチャを変更します。
+OpenShiftのネイティブ・アーキテクチャは、SDDCのレガシーから軽量なコンテナ・ネイティブ・フレームワークへのヘビー級のコスト構造を変更します。
 
-**Risk mitigation:**
-With OpenShift support for on-premises and public cloud options, OpenShift is insurance against public cloud lock-in.
+**リスクの軽減：**
+OpenShiftはオンプレミスとパブリッククラウドのオプションをサポートしており、パブリッククラウドのロックインに対する保険となる。
 
-**Independent from infrastructure:**
-Red Hat OpenShift runs consistently on bare metal, on-premises virtualization, or public cloud for ultimate choice and flexibility of deployment and updates.
+**インフラからの独立：**
+Red Hat OpenShift は、ベアメタル、オンプレミス仮想化、またはパブリッククラウド上で一貫して実行されるため、デプロイとアップデートの究極の選択肢と柔軟性が得られます。
 
-**Pure open source innovation:**
-The innovation in Kubernetes, serverless, service mesh, Kubernetes Operators, and more powered by the velocity of open source, with Red Hat in the lead.
+**純粋なオープンソースのイノベーション：**
+Kubernetes、サーバーレス、サービスメッシュ、Kubernetes Operators などのイノベーションは、Red Hat を筆頭とするオープンソースの速度によってもたらされます。
 
-== Next steps
+== 次のステップ
+OpenShift Virtualization の詳細をお知りになりたい方は、 https://www.redhat.com/en/technologies/cloud-computing/openshift/virtualization[ランディングページ^] をご覧になるか、 https://docs.openshift.com/container-platform/latest/virt/about_virt/about-virt.html[ドキュメント^] をご確認ください。また、 https://www.youtube.com/playlist?list=PLaR6Rq6Z4IqeQeTosfoFzTyE_QmWZW6n_[YouTube^] でデモビデオをいくつかご覧ください。
 
-If you would like to learn more about OpenShift Virtualization, please visit the https://www.redhat.com/en/technologies/cloud-computing/openshift/virtualization[landing page^], review the https://docs.openshift.com/container-platform/latest/virt/about_virt/about-virt.html[documentation^], or view some of our demo videos on https://www.youtube.com/playlist?list=PLaR6Rq6Z4IqeQeTosfoFzTyE_QmWZW6n_[YouTube^].
+== ラボ環境の要件
 
-== Requirements for the Lab Environment
+* 参加者は、ブラウザとインターネットにアクセスできる自分のコンピュータを持っている必要があります。
+* Firefoxではコピー＆ペーストができないため、Chromiumベースのブラウザを推奨。
+* リモートアクセスコンソールはデフォルトで US キーボードレイアウトを使うので、他の国のレイアウトのために特殊文字がどこにあるか知っておくとよい。
 
-* Participant needs to have their own computer with browser and internet access.
-* Chromium based browsers are recommended as some copy/paste functions don't work in Firefox for the time being.
-* Remote access console uses the US keyboard layout by default, so it's good to know where special characters reside for other country's layouts, or to use the copy/paste function in a supported browser.
+=== OpenShift コンソールの認証情報
 
-=== Credentials for the OpenShift Console
+OpenShift クラスタコンソールは {console_url}[here^] で利用できます。
 
-Your OpenShift cluster console is available {console_url}[here^].
-
-Your login is available with:
+アクセスには、次の認証情報を使用してください：
 
 * *User:* {user}
 * *Password:* {password}
 
-=== vCenter Access
+=== vCenter へのアクセス
 
-In the migration chapter of the lab, you will be asked to login and examine a https://{vcenter_console}[VMware vSphere^] environment.
+実習ラボの移行の章では、 https://{vcenter_console}[VMware vSphere^] 環境にログインして調べます。
 
-For access, please use the following credentials:
+アクセスには、次の認証情報を使用してください：
 
 * *vcenter_user:* {vcenter_full_user}
 * *vcenter_password:* {vcenter_password}
