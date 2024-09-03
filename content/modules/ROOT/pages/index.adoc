@@ -76,7 +76,7 @@ OpenShift Virtualization の詳細をお知りになりたい方は、 https://w
 
 === OpenShift コンソールの認証情報
 
-OpenShift クラスタコンソールは {console_url}[here^] で利用できます。
+OpenShift クラスタコンソールは {console_url}[こちら^] で利用できます。
 
 アクセスには、次の認証情報を使用してください：
 
