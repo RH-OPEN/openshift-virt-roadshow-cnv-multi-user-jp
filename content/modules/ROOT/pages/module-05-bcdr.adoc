@@ -2,32 +2,35 @@
 
 == はじめに
 
-OpenShift仮想化で仮想マシンのバックアップとリカバリのために利用可能なオプションには事欠きません。これらのソリューションの多くは、OpenShift でポッドを保護するのと同じ方法で機能します。仮想マシン、または複数の仮想マシンを含むネームスペースのバックアップを取り、オブジェクト・ストレージ・バケットにリモートで保存することでこれを行います。これらのバックアップには通常、仮想マシンを定義するメタデータやカスタムリソースとともに、永続ストレージボリュームも含まれます。
+OpenShift仮想化で仮想マシンのバックアップとリカバリのために利用可能なオプションには事欠きません。これらのソリューションの多くは、OpenShift でPodを保護するのと同じ方法で機能します。仮想マシン、または複数の仮想マシンを含むネームスペースのバックアップを取り、オブジェクトストレージバケットにリモートで保存することでこれを行います。これらのバックアップには通常、仮想マシンを定義するメタデータやカスタムリソースとともに、永続ストレージボリュームも含まれます。
 
 Red Hat ソリューションには以下が含まれます：
 
-* https://docs.openshift.com/container-platform/4.15/backup_and_restore/application_backup_and_restore/oadp-features-plugins.html[*OADP (OpenShift APIs for Data Protection)*]： 仮想マシンを含む OpenShift オブジェクトをバックアップおよびリストアするための、ストレージに依存しない方法を提供する Red Hat Operator。
+* https://docs.openshift.com/container-platform/4.15/backup_and_restore/application_backup_and_restore/oadp-features-plugins.html[*OADP (OpenShift APIs for Data Protection)*]: 
+仮想マシンを含む OpenShift オブジェクトをバックアップおよびリストアするための、ストレージに依存しない方法を提供する Red Hat提供Operator。
 * https://access.redhat.com/documentation/en-us/red_hat_openshift_data_foundation/4.15/html/configuring_openshift_data_foundation_disaster_recovery_for_openshift_workloads/metro-dr-solution/[*OpenShift Data Foundation Metro-DR*]
 
-エコシステム・パートナー・ソリューション
+エコシステムパートナーソリューション
 
 * https://portworx.com/blog/disaster-recovery-for-red-hat-openshift-virtualization/[*Portworx Disaster Recovery for OpenShift Virtualization*] 
 * https://storware.eu/solutions/virtual-machine-backup-and-recovery/openshift-virtualization-and-kubevirt/[*Storware Backup and Recovery*] 
 * https://docs.trilio.io/kubernetes/appendix/backup-and-restore-virtual-machine-running-on-openshift-virtualization[*Trilio for Kubernetes*]
 * https://docs.kasten.io/latest/usage/openshift_virtualization.html[*VEEAM Kasten*]
 
-NOTE: これは、サポートされているバックアップとリカバリのソリューションを提供するパートナーの網羅的なリストを意図したものではありません。ストレージまたはデータ保護ベンダーに問い合わせて、その製品と OpenShift Virtualization との互換性を確認してください。
+NOTE: これは、サポートされているバックアップとリカバリのソリューションを提供するパートナーの網羅的なリストを意図したものではありません。
+ストレージまたはバックアップ製品のベンダーに問い合わせて、その製品と OpenShift Virtualization との互換性を確認してください。
 
 この部分では、OADP を使用して仮想マシンのバックアップと復元を実行します。
 
 [[review_operator]]
 == OADP オペレーターのレビュー
 
-. 左側のメニューから *Operators* -> *Installed Operators* に移動し、プロジェクト *oadp-{user}* が選択されていることを確認します。Name search フィールドに *OADP* と入力すると、インストールされているバージョンの *OADP Operator* が表示されます。オペレーターをクリックして詳細を確認してください。
+. 左側のメニューから *Operators* -> *Installed Operators* に移動し、プロジェクト *oadp-{user}* が選択されていることを確認します。Name search フィールドに *OADP* と入力すると、
+インストールされているバージョンの *OADP Operator* が表示されます。オペレーターをクリックして詳細を確認してください。
 +
 image::module-05-bcdr/00_Left_Menu.png[link=self, window=blank, width=100%]
 
-. 利用可能な *提供API* を確認します。このモジュールでは、*Backup* と *Restore* 関数を使用します。
+. 利用可能な *提供API* を確認します。このモジュールでは、*Backup* と *Restore* ファンクションを使用します。
 +
 image::module-05-bcdr/01_Overview.png[link=self, window=blank, width=100%]
 
@@ -39,15 +42,16 @@ image::module-05-bcdr/02_DPA.png[link=self, window=blank, width=100%]
 +
 image::module-05-bcdr/03_OADP_YAML.png[link=self, window=blank, width=100%]
 
-*kubevirt* プラグインを追加することで *OADP* が設定され、クラスタ上で動作している OpenShift Data Foundations が提供する内部オブジェクトストレージバケットを使用するように設定されていることに注目してください。
+*kubevirt* プラグインを追加することで *OADP* が設定されます。クラスタ上で動作している OpenShift Data Foundations が提供する内部オブジェクトストレージバケットを使用するように設定されていることに注目してください。
 
 [IMPORTANT]
-便宜上、このラボではローカルのオブジェクト・バケットにバックアップを実行するように設定していますが、本番環境ではバックアップを外部ストレージ・システム、またはクラウドベースのオブジェクト・ストレージ・バケットに向けるようにします。
+便宜上、このラボではローカルのオブジェクトバケットにバックアップを実行するように設定していますが、本番環境ではバックアップを外部ストレージシステム、またはクラウドベースのオブジェクトストレージバケットに向けるようにします。
 
 [[create_backup]]
 == 仮想マシンバックアップの作成
 
-前のセクションで作成した仮想マシン *fedora02* のバックアップを実行します。バックアップするオブジェクトの選択は、*app* と *vm.kubevirt.io/name* というラベルで定義します。これには、VM定義、ディスク、および設定マップやシークレットなど、仮想マシンで使用されている追加オブジェクトが含まれます。
+前のセクションで作成した仮想マシン *fedora02* のバックアップを実行します。バックアップするオブジェクトの選択は、*app* と *vm.kubevirt.io/name* というラベルで定義します。
+これには、VM定義、ディスク、および設定マップやシークレットなど、仮想マシンで使用されている追加オブジェクトが含まれます。
 
 . *オペレーターの詳細* に戻り、水平スクロールバーを使用して、*Backup* タブが表示されるまでスクロールバックします。
 
@@ -86,7 +90,7 @@ spec:
 
 . 下部にある *Create* ボタンをクリックします。
 +
-この YAML の内容は、名前空間 *vmexamples-{user}* 内の *app: fedora02* というラベルを持つオブジェクトが、 *DataProtectionApplication* 構成で指定された場所にバックアップされることを示していることに注意してください。
+この YAML の内容は、 *vmexamples-{user}* プロジェクト内の *app: fedora02* というラベルを持つオブジェクトが、 *DataProtectionApplication* 構成で指定された場所にバックアップされることを示していることに注意してください。
 +
 image::module-05-bcdr/05_Create_Backup_YAML.png[link=self, window=blank, width=100%] [link=self,window=blank,width=100%]
 +
@@ -99,7 +103,8 @@ image::module-05-bcdr/06_Backup_Completed.png[link=self, window=blank, width=100
 [[restore_backup]]
 == バックアップからのリストア
 
-. *Virtualization* -> *VirtualMachines* に移動し、*fedora02* VM の右側にある 3 点のメニューをクリックし、表示されるメニューから *Delete* を選択します (*vmexamples-{user}* プロジェクトに戻る必要があるかもしれません)。
+. *Virtualization* -> *VirtualMachines* に移動し、*fedora02* VM の右側にある 3 点のメニューをクリックし、表示されるメニューから *Delete* を選択します
+ (*vmexamples-{user}* プロジェクトに戻る必要があるかもしれません)。
 +
 image::module-05-bcdr/07_Delete_VM.png[link=self, window=blank, width=100%]
 
@@ -107,7 +112,7 @@ image::module-05-bcdr/07_Delete_VM.png[link=self, window=blank, width=100%]
 +
 image::module-05-bcdr/08_Confirm_Delete.png[link=self, window=blank, width=100%]
 
-. [*Operators*]->[*Installed Operators*]に戻り、*OADP Operator* を選択します（*oadp-{user}* プロジェクトに切り替える必要があるかもしれません）。
+. [*Operators*]->[*Installed Operators*]に戻り、*OADP Operator* を選択します（ *oadp-{user}* プロジェクトに切り替える必要があるかもしれません）。
 . 水平ナビゲーション・バーを使用して *Restore* タブを見つけ、*Restore* タブをクリックし、 *Create Restore* を押します。
 +
 image::module-05-bcdr/09_Restore_Tab.png[link=self, window=blank, width=100%]
@@ -148,4 +153,4 @@ image::module-05-bcdr/12_VM_Restored.png[link=self, window=blank, width=100%]
 
 == まとめ
 
-仮想マシンの保護は、仮想化プラットフォームの重要な側面です。OpenShift Virtualizationは、例えばOADPを使用したり、ストレージやバックアップパートナーがそれぞれの製品を統合できるようにするなど、ネイティブな保護を可能にする複数の方法を提供します。仮想マシンの保護方法について質問がある場合は、ワークショップのプロクターに遠慮なく質問するか、ベンダーに連絡して OpenShift Virtualization との互換性を確認してください。
+仮想マシンの保護は、仮想化プラットフォームの重要な側面です。OpenShift Virtualizationは、例えばOADPを使用したり、ストレージやバックアップパートナーがそれぞれの製品を統合できるようにするなど、ネイティブな保護を可能にする複数の方法を提供します。仮想マシンの保護方法について質問がある場合は、ワークショップの講師に遠慮なく質問するか、ベンダーに連絡して OpenShift Virtualization との互換性を確認してください。

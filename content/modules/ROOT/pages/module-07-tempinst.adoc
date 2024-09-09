@@ -7,7 +7,7 @@
 *Templates* ページには、4 種類の仮想マシンテンプレートが表示されます：
 
 * *Red Hat Supported* テンプレートは Red Hat によって完全にサポートされています。
-* *User Supported* テンプレートは、ユーザーがクローンして作成した*Red Hat Supported* テンプレートです。
+* *User Supported* テンプレートは、ユーザーがクローンして作成した *Red Hat Supported* テンプレートです。
 * *Red Hat Provided* テンプレートは、Red Hat によって限定的にサポートされます。
 * *User Provided* テンプレートは、ユーザーがクローンして作成した *Red Hat Provided* テンプレートです。
 
@@ -16,16 +16,16 @@
 
 . これから実行するタスクでは、いくつかの追加の VM をプロビジョニングする必要があります。準備として、既存の *fedora01* と *fedora02* 仮想マシンをシャットダウンして、共有環境にラボを完了するのに十分なリソースがあることを確認してください。
 
-. *仮想化* -> *仮想マシン* に移動します。
+. *Virtualization* -> *VirtualMachines* に移動します。
 . 環境内のすべての VM を確認するために、アクセスできるすべてのプロジェクトを確認してください。最低限、プロジェクト `vmimported-{user}` と `vmexamples-{user}` を確認してください。
 . ステータスが *Running* となっているVMがあれば、右側の3つの点をクリックして *Stop* を選択してください。
 
-これで全てのVMが *Stop* 状態になるはずだ。
+これで全てのVMが *Stop* 状態になるはずです。
 
 [[clone_customize_template]]
 == テンプレートのクローンとカスタマイズ
 
-デフォルトでは、Red Hat OpenShift Virtualization が提供するテンプレートはカスタマイズできません。しかし、特定のワークロードに対して特定のタイプの仮想マシンを要求しやすくするために、テンプレートをクローンして特定のワークロード用に調整することができます。このラボのこのセクションでは、エンドユーザーに対してオンデマンドで事前設定済みのデータベースサーバーを提供するテンプレートを作成することで、まさにこれを実行します。
+デフォルトでは、Red Hat OpenShift Virtualization が提供するテンプレートはカスタマイズできません。しかし、特定のワークロードに対して特定のタイプの仮想マシンを要求しやすくするために、テンプレートをクローンして特定のワークロード用に調整することができます。このラボのこのセクションでは、エンドユーザーに対してオンデマンドで事前設定済みのデータベースサーバーを提供するテンプレートを作成することでこれを実行します。
 
 . 開始するには、*Virtualization* -> *Templates* に移動し、プロジェクトに *openshift* を選択します（ *Project* ドロップダウンを開き、*Show default projects* の横にあるラジオボタンをクリックする必要があるかもしれません）。
 +
@@ -35,7 +35,7 @@ image::module-07-tempinst/01_Template_List.png[link=self, window=blank, width=10
 +
 image::module-07-tempinst/02_Search_Centos9.png[link=self, window=blank, width=100%]
 
-. *centos-stream90-server-small* のテンプレート名をクリックすると、デフォルトテンプレートは編集できないというメッセージが表示され、クローンを作成するかどうか尋ねられます。*新しいカスタムテンプレートを作成する* オプションをクリックします。
+. *centos-stream90-server-small* のテンプレート名をクリックすると、「emplates provided by Red Hat are not editable.」（デフォルトテンプレートは編集できない）というメッセージが表示され、クローンを作成するかどうか尋ねられます。*Create a new custom Template* オプションをクリックします。
 +
 
 image::module-07-tempinst/03_Create_Custom_Template.png[link=self, window=blank, width=100%]
@@ -48,7 +48,7 @@ image::module-07-tempinst/03_Create_Custom_Template.png[link=self, window=blank,
 +
 image::module-07-tempinst/04_Clone_Template_Options.png[link=self, window=blank, width=100%]
 
-. これでテンプレートの *詳細* ページに移動し、いくつかのオプションをカスタマイズできるようになります。まず、ページの一番下にあるCPUとメモリを探し、鉛筆のアイコンをクリックして編集します。
+. これでテンプレートの *Details* ページに移動し、いくつかのオプションをカスタマイズできるようになります。まず、ページの一番下にあるCPUとメモリを探し、鉛筆のアイコンをクリックして編集します。
 +
 image::module-07-tempinst/05_Clone_Details.png[link=self, window=blank, width=100%]
 
@@ -60,7 +60,7 @@ image::module-07-tempinst/06_Edit_CPU_Mem.png[link=self, window=blank, width=100
 +
 image::module-07-tempinst/09_Scripts_CloudInit.png[link=self, window=blank, width=100%]
 
-. *Cloud-init* ダイアログが開いたら、ラジオボタンをクリックして *Configure via： Script* をクリックし、YAMLを以下のYAMLスニペットで置き換える。
+. *Cloud-init* ダイアログが開いたら、ラジオボタンをクリックして *Configure via： Script* をクリックし、YAMLを以下のYAMLスニペットで置き換えます。
 +
 [source,yaml,role=execute]
 ----
@@ -131,7 +131,7 @@ NOTE: 最初はこのVMをクイック作成するオプションがないこと
 +
 image::module-07-tempinst/17_Windows_2k19_Dialog.png[link=self,window=blank,width=100%]
 +
-. このダイアログでは
+. このダイアログにて以下を指定します。
 .. *win-sysprep* という名前を指定します。
 .. チェックボックス *Boot from CD* を有効にする。
 .. ドロップダウンメニューから *URL (creates PVC)* を選択します。
@@ -145,11 +145,11 @@ image::module-07-tempinst/17_Windows_2k19_Dialog.png[link=self,window=blank,widt
 +
 image::module-07-tempinst/18_Windows_2k19_Parameters.png[link=self, window=blank, width=100%]
 
-. *VirtualMachineのカスタマイズと作成* 画面で、*ブートモード* オプションの横にある編集ペンシルをクリックします。
+. *Customize and create VirtualMachine* 画面で、*Boot mode* オプションの横にある編集ペンシルをクリックします。
 +
 image::module-07-tempinst/19_Boot_Mode.png[link=self, window=blank, width=100%]
 
-. *ブートモード* メニューがポップアップしたら、ドロップダウンメニューから *BIOS* ブートモードを選択します。
+. *Boot mode* メニューがポップアップしたら、ドロップダウンメニューから *BIOS* ブートモードを選択します。
 +
 image::module-07-tempinst/19a_Boot_BIOS.png[link=self, window=blank, width=100%]
 
@@ -322,63 +322,64 @@ image::module-07-tempinst/25_CD_Import.png[link=self, window=blank, width=100%]
 +
 image::module-07-tempinst/26_Windows_2k19_Console.png[link=self, window=blank, width=100%]
 
-. VMのインストール・プロセスが完了したら（プロビジョニングに3～5分、起動と設定に約10分かかります）、停止ボタンで電源を切ってください。
+. VMのインストールプロセスが完了したら（プロビジョニングに3～5分、起動と設定に約10分かかります）、停止ボタンで電源を切ってください。
 +
 image::module-07-tempinst/27_Stop_Button.png[link=self, window=blank, width=100%]
 
-. マシンの電源を切った状態で、カスタマイズプロセスを実行することなく、今後のWindowsテンプレートベースのインストールに使えるルートボリュームのクローンを作りたい。
+. ここから、カスタマイズプロセスを実行することなく今後のWindowsテンプレートベースのインストールに使えるよう、マシンの電源を切った状態でルートボリュームのクローンを作ります。
 
-. *vmexamples-{user}* ネームスペースで使用可能なPVCのリストを表示するには、*Storage* -> *PersistentVolumeClaims* をクリックします。
+. *vmexamples-{user}* ネームスペースで使用可能なPVCのリストを表示するため、*Storage* -> *PersistentVolumeClaims* をクリックします。
 +
 image::module-07-tempinst/28_Storage_PVC.png[link=self, window=blank, width=100%]
 
-. 表示されている *windows* PVCを見つけ、右側の3点メニューから *Clone PVC* を選択します。ポップアップするメニューで、新しいPVCに *windows-2k19-sysprep-template* という名前を付け、*アクセスモード* を *Shared access(RWX)* に設定し、*Clone* ボタンをクリックします。
+. 表示されている *windows* PVCを見つけ、右側の3点メニューから *Clone PVC* を選択します。ポップアップするメニューで、新しいPVCに *windows-2k19-sysprep-template* という名前を付け、*Access Mode* を *Shared access(RWX)* に設定し、*Clone* ボタンをクリックします。
 +
 image::module-07-tempinst/29_Clone_Menu.png[link=self, window=blank, width=100%]
 
-. 一度これを保存しておけば、今後Windows VMを素早く作成するのに使うことができる。
+. 一度これを保存しておけば、今後Windows VMを素早く作成するのに使うことができます。
 
-. *仮想化* -> *カタログ* メニューに戻り、*ディスク・ソース* として *PVC(clone PVC)* のオプションを選択し、クローンする *PVC name* として *Windows-2k19-Sysprep-Template* PVCを選択し、*Quick create VirtualMachine* ボタンをクリックして、新しい仮想マシンをクイック作成するためのブート・ソースとしてこのクローンPVCを使用します。
+. *Virtualization* -> *Catalog* メニューに戻り、*Disk source* として *PVC(clone PVC)* のオプションを選択し、クローンする *PVC name* として *Windows-2k19-Sysprep-Template* PVCを選択し、*Quick create VirtualMachine* ボタンをクリックして、新しい仮想マシンをクイック作成するためのブートソースとしてこのクローンPVCを使用します。
 +
 image::module-07-tempinst/30_Windows_Template.png[link=self, window=blank, width=100%]
 
 [[instance_types]]
 == インスタンスタイプの紹介
 
-仮想マシンのデプロイプロセスを簡素化するために、OpenShift 4.14からデフォルトの設定メカニズムが変更され、*インスタンスタイプ* の使用が重視されるようになりました。インスタンスタイプは、新しい VM に適用するリソースと特性を定義できる再利用可能なオブジェクトです。カスタム・インスタンス・タイプを定義したり、独自のVMをプロビジョニングする際にOpenShift Virtualizationをインストールした際に含まれる様々なインスタンス・タイプを使用することができます。このセクションでは、インスタンスタイプを使用したVMのプロビジョニングについて説明します。
+仮想マシンのデプロイプロセスを簡素化するために、OpenShift 4.14からデフォルトの設定メカニズムが変更され、*インスタンスタイプ* の使用が重視されるようになりました。インスタンスタイプは、新しい VM に適用するリソースと特性を定義できる再利用可能なオブジェクトです。カスタムインスタンスタイプを定義したり、独自のVMをプロビジョニングする際にOpenShift Virtualizationをインストールした際に含まれる様々なインスタンスタイプを使用することができます。このセクションでは、インスタンスタイプを使用したVMのプロビジョニングについて説明します。
 
 . 始めるには、左側メニューの *Virtualization* -> *Catalog* をクリックします。デフォルトのカタログ項目が *InstanceType* であることがわかります。
 +
 image::module-07-tempinst/31_Left_Menu_Catalog.png[link=self, window=blank, width=100%]
 
-. インスタンスタイプを使用する最初のステップは、ブートするボリュームを選択することです。ブートソースを提供するテンプレートと同様に、これらのブートソースは、InstanceType でプロビジョニングされたゲストで使用できます。ブートソースを提供するテンプレートと同様に、これらのブートソースは InstanceType でプロビジョニングされたゲストで使用できます。
+. インスタンスタイプを使用する最初のステップは、ブートするボリュームを選択することです。ブートソースを提供するテンプレートと同様に、これらのブートソースは InstanceType でプロビジョニングされたゲストで使用できます。
+*openshift-virtualization-os-images* プロジェクトを選択すると、含まれているボリュームを確認できます。
+または、*Add volume* ボタンを使用して独自のボリュームをアップロードできます。
 +
-NOTE: *Add Volume* オプションは、読み取り/書き込みアクセス権を持つプロジェクトに参加していない場合、灰色表示されます。
+NOTE: *Add Volume* オプションは、ログインしているユーザが読み取り/書き込みアクセス権を持つプロジェクトに参加していない場合、グレーアウト表示されます。
 
 +
 image::module-07-tempinst/32_Volume_Boot.png[link=self, window=blank, width=100%]
 
-. *rhel9* ブートボリュームをクリックして、ブートするボリュームタイプとして選択します。選択すると、イメージ名の左側に小さな青い縦線が表示されます。
+. *rhel9* ブートボリュームをクリックして、ブートを行うボリュームタイプとして選択します。選択するとイメージ名の左側に小さな青い縦線が表示されます。
 +
 image::module-07-tempinst/33_Select_RHEL9.png[link=self, window=blank, width=100%]
 
-. 次に、使用するインスタンスタイプを選択します。デフォルトで Red Hat が提供するインスタンスタイプがありますが、自分で作成することもできます。提供されているインスタンスタイプにカーソルを合わせると、その使用目的の説明が表示されます。
+. 次に、使用するインスタンスタイプを選択します。デフォルトで Red Hat が提供するインスタンスタイプがありますが自分で作成することもできます。提供されているインスタンスタイプにカーソルを合わせると、その使用目的の説明が表示されます。
 +
 image::module-07-tempinst/34_Select_InstanceType.png[link=self,window=blank,width=100%]
 +
 * Red Hat が提供するインスタンスタイプは、以下の用途を想定しています：
-** n1: VNF のようなネットワーク集約型のワークロード用に設計されています。
 ** n1: VNF のようなネットワーク集約型のワークロード向け
 ** cx1: 計算集約型のワークロード向け
-** u1: 最も一般的で「ユニバーサル」なワークロード
-** nVidia GPU オペレータを使用する VM 専用。
-** m1: メモリ集約型ワークロード向け。
+** u1: 最も一般的で「ユニバーサル」なワークロード向け
+** gn1: nVidia GPU オペレータを使用する VM 専用
+** m1: メモリ集約型ワークロード向け
 
-. *Uシリーズ* タイルをクリックすると、一般的なインスタンスタイプ用に定義されたリソースのドロップダウンリストが表示されます。デフォルトのオプションは、*medium: 1 CPUs, 4 GiB Memory* です。これを選択します。
+. *U series* タイルをクリックすると、一般的なインスタンスタイプ用に定義されたリソースのドロップダウンリストが表示されます。デフォルトのオプションは、*medium: 1 CPUs, 4 GiB Memory* です。これを選択します。
 +
 image::module-07-tempinst/35_InstanceType_Resources.png[link=self, window=blank, width=100%]
 
-. インスタンスタイプを使用してプロビジョニングするために完了する必要がある最後のセクションは、テンプレートセクションと似ています。仮想マシンの名前を指定し、バッキングディスクに使用するストレージクラスを選択する必要があります。デフォルトでは、仮想マシンの名前が生成され、デフォルトのストレージクラスが選択されます。問題がなければ、*Create VirtualMachine* ボタンをクリックします。
+. インスタンスタイプを使用してプロビジョニングするために完了する必要がある最後のセクションはテンプレートセクションと似ています。仮想マシンの名前を指定し、バッキングディスクに使用するストレージクラスを選択する必要があります。デフォルトでは、自動で仮想マシンの名前が生成され、デフォルトのストレージクラスが選択されます。問題がなければ、*Create VirtualMachine* ボタンをクリックします。
 +
 image::module-07-tempinst/36_VM_Details.png[link=self, window=blank, width=100%]
 
@@ -391,12 +392,15 @@ image::module-07-tempinst/37_VM_Overview.png[link=self, window=blank, width=100%
 
 次のラボのリソースを節約するために、このモジュールで作成した VM を停止します。
 
-. *仮想化* -> *VirtualMachines* に移動します。
-. 環境内のすべての VM を確認するために、アクセスできるすべてのプロジェクトを確認してください。最低限、プロジェクト `vmimported-{user}` と `vmexamples-{user}` を確認してください。
+. *Virtulization* -> *VirtualMachines* に移動します。
+. 環境内のすべての VM を確認するために、アクセスできるすべてのプロジェクトを確認してください。
+最低限、プロジェクト `vmimported-{user}` と `vmexamples-{user}` を確認してください。
 . ステータスが *Running* となっているVMがあれば、右側の3つの点をクリックして *Stop* を選択してください。
 
-これで、すべての VM が *Stop* 状態になるはずである。
+これで、すべての VM が *Stop* 状態になるはずです。
 
 == まとめ
 
-このセクションでは、既存のテンプレートをクローンしてカスタマイズし、データベースのような特定のワークロードに使用できるテンプレートを作成する方法を学んだ。また、ブートソースなしで存在する既存の Windows テンプレートの 1 つを設定し、インストールプロセスを自動化する方法を学びました。さらに、特定のワークロード用に仮想マシンをさらにカスタマイズするために、インスタンス・タイプを利用する方法も紹介した。
+このセクションでは、既存のテンプレートをクローンしてカスタマイズし、データベースのような特定のワークロードに使用できるテンプレートを作成する方法を学びました。
+また、ブートソースなしで存在する既存の Windows テンプレートの 1 つを設定し、インストールプロセスを自動化する方法を学びました。
+さらに、特定のワークロード用に仮想マシンをさらにカスタマイズするために、インスタンスタイプを利用する方法も紹介しました。

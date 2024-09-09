@@ -2,16 +2,18 @@
 
 == はじめに
 
-この部分では、 https://access.redhat.com/documentation/en-us/migration_toolkit_for_virtualization/[Migration Toolkit for Virtualization^] (MTV) を使用して、VMware vSphere から OpenShift に仮想マシンをインポートします。マイグレーション・ツールキットは、インポートの2つの 「モード 」をサポートしています：
+この部分では、 https://access.redhat.com/documentation/en-us/migration_toolkit_for_virtualization/[Migration Toolkit for Virtualization^] (MTV) を使用して、VMware vSphere から OpenShift に仮想マシンをインポートします。
+マイグレーション・ツールキットは、2つのマイグレーションモードをサポートしています:
 
-* コールド・マイグレーションは、マイグレーションを開始する前にソース仮想マシンの電源を切ります。これはデフォルトの移行タイプです。
-* ウォーム・マイグレーションは、ソース仮想マシンの実行を継続しながらデータをコピーします。データの大部分が移行されると、VMはシャットダウンされ、最終データが移行先にコピーされます。その後、新しいVMを起動することができるため、VMをホストするアプリケーションのダウンタイムが大幅に短縮されます。
+* コールドマイグレーションは、マイグレーションを開始する前にソース仮想マシンの電源を切ります。これはデフォルトの移行タイプです。
+* ウォームマイグレーションは、ソース仮想マシンの実行を継続しながらデータをコピーします。データの大部分が移行されるとVMはシャットダウンされ、最終データが移行先にコピーされます。
+その後、新しいVMを起動することができるため、VMをホストするアプリケーションのダウンタイムが大幅に短縮されます。
 
 NOTE: マイグレーション・ツールキットは、OperatorHubで利用可能なOperatorを使用してクラスタにデプロイ済みです。
 
 Operatorのインストールおよび設定方法のドキュメントは、 https://access.redhat.com/documentation/en-us/migration_toolkit_for_virtualization/2.6/html/installing_and_using_the_migration_toolkit_for_virtualization/installing-the-operator_mtv[こちら^]を参照してください。
 
-ご自身のニーズに合わせてMigration Toolkit for Virtualizationを設定する方法について詳しく知りたい場合は、以下のリンク先のドキュメントを参照してください：
+ご自身のニーズに合わせてMigration Toolkit for Virtualizationを設定する方法について詳しく知りたい場合は、以下のリンク先のドキュメントを参照してください:
 
 * https://access.redhat.com/documentation/en-us/migration_toolkit_for_virtualization/2.6/html/installing_and_using_the_migration_toolkit_for_virtualization/prerequisites_mtv#openstack-prerequisites_mtv[OpenStack^]
 * https://access.redhat.com/documentation/en-us/migration_toolkit_for_virtualization/2.6/html/installing_and_using_the_migration_toolkit_for_virtualization/prerequisites_mtv#rhv-prerequisites_mtv[Red Hat Virtualization^]
@@ -31,8 +33,8 @@ Operatorのインストールおよび設定方法のドキュメントは、 ht
 
 * ISO/CD-ROM ディスクがアンマウントされていること。
 * 各 NIC には IPv4 アドレスおよび/または IPv6 アドレスが 1 つずつ含まれている必要があります。
-* VM オペレーティング・システムは、 https://access.redhat.com/articles/973163#ocpvirt[OpenShift Virtualization^] ゲスト・オペレーティング・システムとして使用するために認証され、サポートされている必要があります。
-* VM 名には、小文字 (a-z)、数字 (0-9)、またはハイフン (-) のみを含める必要があります。最初と最後の文字は英数字でなければなりません。名前には大文字、スペース、ピリオド(.)、特殊文字を含んではならない。
+* VM オペレーティング・システムは、 https://access.redhat.com/articles/973163#ocpvirt[OpenShift Virtualization^] のゲストオペレーティングシステムとして使用するために認証され、サポートされている必要があります。
+* VM 名には、小文字 (a-z)、数字 (0-9)、またはハイフン (-) のみを含める必要があります。最初と最後の文字は英数字でなければなりません。名前には大文字、スペース、ピリオド(.)、特殊文字を含めることはできません。
 * VM 名は、OpenShift Virtualization 環境の既存の VM 名と重複してはなりません。
 
 NOTE: *Migration Toolkit for Virtualization* は、ルールに準拠していない VM に新しい名前を自動的に割り当てます。
@@ -44,7 +46,7 @@ NOTE: *Migration Toolkit for Virtualization* は、ルールに準拠してい�
 
 OpenShiftに移行するために、3層のアプリケーションがVMware上にデプロイされています。
 
-アプリケーションは以下の4つの仮想マシンで構成されています：
+アプリケーションは以下の4つの仮想マシンで構成されています:
 
 * Web サーバーにトラフィックをリダイレクトする HAproxy システム1台
 * MariaDB データベースを実行している Linux システム1台
@@ -56,7 +58,7 @@ NOTE: OpenShift は *Service* を使って SDN に接続された VM のネッ�
 
 === VMware 環境のレビュー
 
-データストアやポートグループのようなリソースを vSphere から OpenShift の同等物、ストレージクラス、ネットワークアタッチメント定義にマッピングするプロセスを理解するのを助けるために、移行元環境を見直すことから始めよう。
+vSphere上のデータストアやポートグループのようなリソースを、OpenShift の提供する同等の機能となるStorage class および Network Attachment Definitionsにマッピングするプロセスを理解するために、まずは移行元環境の確認を行います。
 
 . VMware vCenter に移動する: https://{vcenter_console}[vCenter Console^].
 . *Launch vSphere Client* をクリックします。
@@ -65,11 +67,12 @@ NOTE: OpenShift は *Service* を使って SDN に接続された VM のネッ�
 - *ユーザ:* {vcenter_full_user}
 - *パスワード* : {vcenter_password} 
 
-. デフォルトでは、ナビゲーションツリーの最上部にある *Inventory* ビューに移動します。 *Workloads* アイコンをクリックして、 ナビゲーションツリーを展開し、 ユーザ名に一致するフォルダとその下の4つのVMを確認します。画面上部の *VMs* タブをクリックして、VMの詳細を表示します。
+. デフォルトでは、ナビゲーションツリーの最上部にある *Inventory* ビューに移動します。 *Workloads* アイコンをクリックして、ナビゲーションツリーを展開し、 ユーザ名に一致するフォルダとその下の4つのVMを確認します。
+画面上部の *VMs* タブをクリックして、VMの詳細を表示します。
 +
 image::module-02-mtv/00_Workload_VM_List.png[link=self, window=blank, width=100%]
 
-. *Networks* ビューに変更し、ツリーを展開して仮想マシンが使用するポートグループを表示します。名前が *segment-migrating-to-ocpvirt* であることに注意してください。
+. *Networks* ビューに変更し、ツリーを展開して仮想マシンが使用するポートグループを表示します。名前が *segment-migrating-to-ocpvirt* であることに注目してください。
 +
 image::module-02-mtv/01_vSphere_Network.png[link=self, window=blank, width=100%]
 
@@ -77,7 +80,7 @@ image::module-02-mtv/01_vSphere_Network.png[link=self, window=blank, width=100%]
 +
 image::module-02-mtv/02_vSphere_Datastore.png[link=self,window=blank,width=100%]
 
-=== 移行ツールキットへのVMwareプロバイダーのレビュー
+=== Migration ToolkitのVMwareプロバイダーのレビュー
 
 Migration Toolkit for Virtualization (*MTV*) は、VMware Virtual Disk Development Kit (*VDDK*) SDK を使用して、VMware vSphere から仮想ディスクを転送します。この環境では、VDDKはすでに設定されています。
 
@@ -88,12 +91,12 @@ image::module-02-mtv/03_MTV_Providers.png[link=self, window=blank, width=100%]
 +
 [TIP]
 ====
-MTV 2.4以降では、プロジェクト/ネームスペースを認識し、管理者権限を必要としません。VMのインポートをアプリケーション・チームやVMユーザーに委任することで、ユーザー自身が自分のペースで移行を行うことができます！
+MTV 2.4以降では、プロジェクト/ネームスペースを認識し、管理者権限を必要としません。VMのインポートをアプリケーションチームやVMユーザーに委任することで、ユーザー自身が自分のペースで移行を行うことができます。
 
-また、インベントリ・サーバの警告は無視してかまいません。このラボの残りでは必要ありません。
+また、インベントリ・サーバの警告は無視してかまいません。このラボの作業では必要ありません。
 ====
 
-. デフォルトでは、ターゲット・プラットフォームとして *OpenShift Virtualization* を表す *host* というプロバイダーがあります。
+. デフォルトでは、ターゲットプラットフォームとして *OpenShift Virtualization* を表す *host* というプロバイダーがあります。
 +
 image::module-02-mtv/04_MTV_Provider_List.png[link=self, window=blank, width=100%]
 
@@ -101,7 +104,7 @@ image::module-02-mtv/04_MTV_Provider_List.png[link=self, window=blank, width=100
 
 === 移行計画の作成
 
-環境を確認し、プロバイダを作成したので、次は移行プランを作成します。この計画では、VMware vSphere から Red Hat OpenShift Virtualization に移行する VM を選択し、移行を実行する方法を指定します。
+環境を確認しプロバイダを作成したので、次は移行プランを作成します。このプランでは、VMware vSphere から Red Hat OpenShift Virtualization に移行する VM を選択し、移行を実行する方法を指定します。
 
 . 左メニューの *Migration* -> *Plans for virtualization* に移動し、*Create Plan* を押します。
 +
@@ -111,7 +114,7 @@ image::module-02-mtv/14_Create_VMWARE_Plan.png[link=self, window=blank, width=10
 +
 image::module-02-mtv/16_VMware_Source_Provider.png[link=self, window=blank, width=100%]
 
-. 次のページで、移動したい3つのVMを選択します：
+. 次のページで、移動したい3つのVMを選択します:
 
 * database
 * winweb01
@@ -162,9 +165,10 @@ image::module-02-mtv/24_VM_Migration_Stages.png[link=self, window=blank, width=1
 +
 [IMPORTANT]
 ====
-シミュレートされたラボ環境では、多くの参加者が同じタスクを並行して実行するため、このタスクの実行速度が実際の環境よりも大幅に遅くなる可能性があります。このプロセスが完了するまで、しばらくお待ちください。移行が完了したら、ロードショーの他のセクションを続けてもかまいません。
+シミュレートされたラボ環境では、多くの参加者が同じタスクを並行して実行するため、このタスクの実行速度が実際の環境よりも大幅に遅くなる可能性があります。
+このプロセスが完了するまで、しばらくお待ちください。移行が完了したら、ロードショーの他のセクションを続けてもかまいません。
 
-また、マイグレーションツールキットのドキュメントでは、データセンター間に少なくとも10Gbの接続を推奨していますが、このデモでは利用できません。
+また、Migration Toolkitのドキュメントでは、データセンター間に少なくとも10Gbの接続を推奨していますが、このデモでは利用できません。
 ====
 
 . 数分後、移行が完了しました。
@@ -175,10 +179,12 @@ image::module-02-mtv/25_Completed_VMWARE_Plan.png[link=self, window=blank, width
 
 == まとめ
 
-このセクションでは、Migration Toolkit for Virtualization を調べ、それを使って VMware vSphere 環境から OpenShift Virtualization への既存の仮想マシンの移行を支援しました。Migration Toolkit for Virtualizationの他に、3つの移行ツールキットがあります。これらの組み合わせは、組織のニーズに応じて、多くのタイプのワークロードをOpenShiftクラスタに、そしてOpenShiftクラスタ内に移動するために使用することができます。
+このセクションでは、Migration Toolkit for Virtualization を調べ、それを使って VMware vSphere 環境から OpenShift Virtualization への既存の仮想マシンの移行を支援しました。
+Migration Toolkit for Virtualizationの他に、3つの移行ツールキットがあります。
+これらを組み合わせることで、組織のニーズに応じて、多くの種類のワークロードをOpenShiftクラスタへの移行やクラスタ内での移動が可能です。
 
-* https://developers.redhat.com/products/mtr/overview[Migration Toolkit for Runtimes^] - Javaアプリケーションの近代化と移行を支援し、加速します。
-* https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/[Migration Toolkit for Applications^] - コンテナと Kubernetes への大規模アプリケーションの近代化作業を加速します。
+* https://developers.redhat.com/products/mtr/overview[Migration Toolkit for Runtimes^] - Javaアプリケーションのモダナイズと移行を支援し、加速します。
+* https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/[Migration Toolkit for Applications^] - コンテナと Kubernetes への大規模アプリケーションのモダナイズを加速します。
 * https://docs.openshift.com/container-platform/4.15/migration_toolkit_for_containers/about-mtc.html[Migration Toolkit for Containers^] - OpenShift クラスタ間でステートフルなアプリケーションのワークロードを移行します。
 
-その他のマイグレーション・ツールキットの詳細については、Red Hat アカウント・チームにお問い合わせください。
+その他のMigration Toolkitの詳細については、Red Hat アカウントチームにお問い合わせください。

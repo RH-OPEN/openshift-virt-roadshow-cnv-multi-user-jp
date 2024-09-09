@@ -1,10 +1,15 @@
 = ストレージ管理
 
-Red Hat OpenShift は、オンプレミスとクラウドプロバイダーの両方で、複数のタイプのストレージをサポートしています。OpenShift Virtualization は、実行している環境でサポートされているコンテナ・ストレージ・インターフェース (CSI) プロビジョナーを使用できます。例えば、OpenShift Data Foundation、NetApp、Dell/EMC、Fujitsu、Hitachi、Pure Storage、Portworx、その他多くの企業が、OpenShift Virtualizationでオンプレミス、CSIプロビジョニング、ReadWriteMany（RWX）ボリュームをサポートしています。
+Red Hat OpenShift は、オンプレミスとクラウドプロバイダーの両方で、複数のタイプのストレージをサポートしています。
+OpenShift Virtualization は、実行している環境でサポートされているコンテナストレージインターフェース (CSI) プロビジョナーを使用できます。
+例えば、OpenShift Data Foundation、NetApp、Dell/EMC、Fujitsu、Hitachi、Pure Storage、Portworx、その他多くの企業が、OpenShift Virtualizationでオンプレミス、CSIプロビジョニング、ReadWriteMany（RWX）ボリュームをサポートしています。
 
-このワークショップ・セグメントでは、プロバイダにストレージを要求し、VMディスクを保存するために使用されるPersistent Volume Claims (PVC)について検討する。多くのストレージ・プロバイダは、デバイスのスナップショットやクローンもサポートしています。
+このセグメントでは、プロバイダにストレージを要求し、VMディスクを保存するために使用されるPersistent Volume Claims (PVC)について確認を行います。
+多くのストレージプロバイダは、デバイスのスナップショットやクローンもサポートしています。
 
-特筆すべきは、OpenShift Virtualizationに特有のストレージ・プロトコル（NFS、iSCSI、FCなど）の制限がないことだ。唯一の要件は、クラスタ内でのVMのライブマイグレーションをサポートするためにRWXアクセスモードが利用可能であることです。そうでなければ、VMとアプリケーションのニーズを最も満たすストレージが常に正しい選択となります。
+特筆すべきは、OpenShift Virtualizationに特有のストレージプロトコル（NFS、iSCSI、FCなど）の制限はないことです。
+唯一の要件は、クラスタ内でのVMのライブマイグレーションをサポートするためにRWXアクセスモードが利用可能であることです。
+その上で、VMとアプリケーションのニーズを最も満たすストレージが常に正しい選択となります。
 
 image::module-04-storage/00_disk_concepts.png[link=self, window=blank, width=100%]
 
@@ -12,17 +17,18 @@ image::module-04-storage/00_disk_concepts.png[link=self, window=blank, width=100
 
 == VM の PVC を調べる
 
-この実習ラボでは、作成した仮想マシン *fedora01* の背後にあるストレージを詳しく見ていきます。
+このラボでは、作成した仮想マシン *fedora01* のバックエンドにあるストレージを詳しく見ていきます。
 
-. まず、左メニューの *Storage* -> *Persistent Volume Claims* をクリックします。 *vmexamples-{user}* ネームスペースにいることを確認してください。前のセクションで *fedora01* VM を作成したときに作成された *fedora01* PVC が表示されているはずです。
+. まず、左メニューの *Storage* -> *Persistent Volume Claims* をクリックします。 *vmexamples-{user}* ネームスペースにいることを確認してください。
+前のセクションで *fedora01* VM を作成したときに作成された *fedora01* PVC が表示されているはずです。
 +
-. *fedora01* PVC をクリックすると、VM をバックアップしているストレージ・ボリュームの詳細が表示されます。
+. *fedora01* PVC をクリックすると、VM をバックアップしているストレージボリュームの詳細が表示されます。
 +
-. 永続ボリュームの請求に関する以下の情報に注目してください：
+. 永続ボリューム要求（PVC）に関する以下の情報に注目してください:
 .. PVCは現在正常にバインドされています。
 .. PVCの要求容量とサイズは30GiBです。
 .. PVCのアクセス・モードはReadWriteMany（RWX）です。
-.. PVCのボリューム・モードはブロック
+.. PVCのボリュームモードはブロックモードです。
 .. ボリュームは *ocs-external-storagecluster-ceph-rbd* ストレージクラスを使用しています。
 +
 image::module-04-storage/02_Fedora01_PVC_Details.png[link=self, window=blank, width=100%]
@@ -30,13 +36,15 @@ image::module-04-storage/02_Fedora01_PVC_Details.png[link=self, window=blank, wi
 [[managing_snapshots]]
 == スナップショットの管理
 
-OpenShift Virtualization は、仮想マシンのディスク・スナップショットを作成するために CSI ストレージ・プロバイダのスナップショット機能に依存しています。KVM統合がVMにインストールされている場合、ゲスト・オペレーティング・システムを休止させるオプションもあります（休止は、ディスクのスナップショットがゲスト・ファイル・システムの一貫した状態を表すことを保証します。）
+OpenShift Virtualization は、仮想マシンディスクのスナップショットを作成するために CSI ストレージ・プロバイダのスナップショット機能に依存しています。
+KVM統合がVMにインストールされている場合、ゲストオペレーティングシステムを休止させるオプションもあります（休止は、ディスクのスナップショットがゲストファイルシステムの一貫した状態を表すことを保証します）。
 
-ディスクスナップショットは CSI によって抽象化されたストレージ実装に依存するため、パフォーマンスへの影響と使用容量はストレージプロバイダに依存します。システムがPVCスナップショットをどのように管理するか、また、PVCスナップショットが与える影響と与えない影響について、ストレージ・ベンダーと協力して確認してください。
+ディスクスナップショットは CSI によって抽象化されたストレージ実装に依存するため、パフォーマンスへの影響と使用容量はストレージプロバイダに依存します。
+システムがPVCスナップショットをどのように管理するか、また、PVCスナップショットが与える影響と与えない影響について、ストレージベンダーと協力して確認してください。
 
 [IMPORTANT]
 ====
-スナップショットは、それ自体ではバックアップやディザスタリカバリの機能ではありません。ストレージ・システムの障害から復旧するには、別の場所に保存された1つ以上のコピーなど、他の方法でデータを保護する必要があります。
+スナップショットは、それ自体ではバックアップやディザスタリカバリの機能ではありません。ストレージシステムの障害から復旧するには、別の場所に保存された1つ以上のコピーなど、他の方法でデータを保護する必要があります。
 
 OpenShift API for Data Protection (OADP)に加えて、Kasten by Veeam、Trilio、Storwareなどのパートナーは、必要に応じて仮想マシンを同じクラスタまたは他のクラスタにバックアップおよびリストアする機能をサポートしています。
 ====
@@ -65,7 +73,7 @@ image::module-04-storage/05_Snapshot_Menu.png[link=self, window=blank, width=100
 . *Take snapshot* を押すと、ダイアログが開きます。
 +
 [NOTE]
-*cloudinitdisk* がスナップショットに含まれないという警告があります。これは予想されたことで、エフェメラルディスクであるために起こります。
+*cloudinitdisk* がスナップショットに含まれないという警告があります。これは正常な動作であり、このディスクがエフェメラルディスクであるために起こります。
 +
 image::module-04-storage/06_VM_Snapshot_Dialog.png[link=self, window=blank, width=100%]
 
@@ -73,11 +81,11 @@ image::module-04-storage/06_VM_Snapshot_Dialog.png[link=self, window=blank, widt
 +
 image::module-04-storage/07_VM_Snapshot_Taken.png[link=self, window=blank, width=100%]
 
-. VMが現在実行中であるため、*Restore* オプションがグレーアウトしていることを確認する。
+. VMが現在実行中であるため、*Restore* オプションがグレーアウトしていることを確認してください。
 +
 image::module-04-storage/08_VM_Restore_Disabled.png[link=self, window=blank, width=100%]
 
-. 次に、*Console* タブに切り替えます。ログインして、VMがブートできないようにするための修正を実行する。
+. 次に、*Console* タブに切り替えます。ログインして、VMがブートできないようにするための修正を実行します。
 +
 image::module-04-storage/09_Console_Login.png[link=self, window=blank, width=100%]
 +
@@ -85,7 +93,7 @@ image::module-04-storage/09_Console_Login.png[link=self, window=blank, width=100
 +
 NOTE: *Copy to clipboard* ボタンと *Paste* ボタンが用意されており、ログインプロセスをより簡単にすることができます。
 
-. ログインしたら、以下のコマンドを実行する：
+. ログインしたら、以下のコマンドを実行します：
 +
 [source,sh,role=execute]
 ----
@@ -99,16 +107,20 @@ image::module-04-storage/10_Bootloader_Broken.png[link=self, window=blank, width
 [IMPORTANT]
 ====
 前のステップでは、ゲスト内からオペレーティングシステムをシャットダウンしました。しかし、OpenShift Virtualization はデフォルトで自動的に再起動します。
-この動作は、グローバルまたは VM 単位で変更できます。
+この動作は、グローバル設定または VM 単位で変更できます。
 ====
 
-. 右上の *Actions* ドロップダウンメニューかショートカットボタンを使って、VM を *Stop* します。このプロセスはグレースフル・シャットダウンを試み、マシンが不安定な状態にあるため、長い時間がかかることがあります。もう一度 *Actions* ドロップダウンメニューをクリックすると、*Force stop* というオプションがあります。ラボを続けるには、このオプションを使用してください。
+. 右上の *Actions* ドロップダウンメニューかショートカットボタンを使って、VM を *Stop* します。
+このプロセスはグレースフルシャットダウンを試みますが、マシンが不安定な状態にある場合長い時間がかかることがあります。
+もう一度 *Actions* ドロップダウンメニューをクリックすると、*Force stop* というオプションがあります。
+ラボを続けるには、このオプションを使用してください。
 
-. VMが停止したことを確認するには、*Overview* タブをクリックします。また、最近取得したスナップショットが *Snapshots* タイルに表示されます。(ドロップダウンからVMを *Force Stop* する必要があるかもしれない。スナップショットをリストアしようとしているので、これは問題ない)。
+. VMが停止したことを確認するには、*Overview* タブをクリックします。また、最近取得したスナップショットが *Snapshots* タイルに表示されます。
+(ドロップダウンからVMを *Force Stop* する必要があるかもしれません。スナップショットをリストアしようとしているので、これは問題ありません）。
 +
 image::module-04-storage/11_VM_Stopped_Snapshot.png[link=self, window=blank, width=100%]
 
-. *Snapshots* タブに戻り、3つの点のメニューをクリックして、VMが停止している状態で、*Restore* がグレーアウトしていないことを確認する。それをクリックする。
+. *Snapshots* タブに戻り、3つの点のメニューをクリックして、VMが停止している状態で *Restore* がグレーアウトしていないことを確認し、クリックします。
 +
 image::module-04-storage/12_VM_Restore.png[link=self, window=blank, width=100%]
 
@@ -120,11 +132,11 @@ image::module-04-storage/13_VM_Restore_Dialog.png[link=self, window=blank, width
 +
 image::module-04-storage/14_VM_Restored.png[link=self, window=blank, width=100%]
 
-. *Overview* タブに戻り、VMを起動する。
+. *Overview* タブに戻り、VMを起動します。
 +
 image::module-04-storage/15_VM_Start.png[link=self, window=blank, width=100%]
 
-. コンソール・タブをクリックして、VMが正常に再起動したことを確認する。
+. コンソールタブをクリックして、VMが正常に再起動したことを確認します。
 +
 image::module-04-storage/16_VM_Running.png[link=self, window=blank, width=100%]
 
@@ -145,7 +157,8 @@ image::module-04-storage/18_VM_Clone_Dialog.png[link=self, window=blank, width=1
 +
 image::module-04-storage/19_VM_Cloned.png[link=self, window=blank, width=100%]
 +
-IMPORTANT: クローンされたVMはソースVMと同じIDを持つため、VMと相互作用するアプリケーションや他のクライアントと競合する可能性があります。外部ネットワークに接続されたVMや同じプロジェクト内のVMをクローンする場合は注意してください。
+IMPORTANT: クローンされたVMはソースVMと同じIDを持つため、VMと相互作用するアプリケーションや他のクライアントと競合する可能性があります。
+外部ネットワークに接続されたVMや同じプロジェクト内のVMをクローンする場合は注意してください。
 
 . 画面上部の *YAML* メニューをクリックすると、VM の名前が *fedora02* になっていることがわかりますが、*fedora01* ソース VM のラベルが残っているので、手動で更新する必要があります。
 +
@@ -155,4 +168,5 @@ image::module-04-storage/20_Cloned_VM_YAML.png[link=self, window=blank, width=10
 
 == まとめ
 
-このラボのこのセクションでは、仮想マシンを管理する際に利用可能なストレージオプションについて検討しました。また、仮想マシンのスナップショットの取得や、別のプロジェクトで使用したり開発を効率化したりするための仮想マシンのクローン作成など、仮想マシンにプロビジョニングされたストレージに依存するいくつかのVM管理機能を実行しました。
+このラボのこのセクションでは、仮想マシンを管理する際に利用可能なストレージオプションについて検討しました。また、仮想マシンのスナップショットの取得や、
+別のプロジェクトで使用したり開発を効率化したりするための仮想マシンのクローン作成など、仮想マシンにプロビジョニングされたストレージに依存するいくつかのVM管理機能を実行しました。

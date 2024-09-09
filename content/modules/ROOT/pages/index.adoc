@@ -2,11 +2,12 @@
 
 [%hardbreaks]
 == はじめに
-OpenShift Virtualization は、最新の Kubernetes ベースのインフラストラクチャ上に仮想マシンを導入することを可能にします。また、仮想マシン、コンテナ、サーバーレス機能で構成されるアプリケーションを作成することができ、これらはすべて Kubernetes ネイティブのツールとパラダイムを使用して一緒に管理されます。
+OpenShift Virtualization は、最新の Kubernetes ベースのインフラストラクチャ上に仮想マシンを導入することを可能にします。
+また、仮想マシン、コンテナ、サーバーレス機能で構成されるアプリケーションを作成することができ、これらはすべて Kubernetes ネイティブのツールとパラダイムを使用して一緒に管理されます。
 
-このロードショー・イベントは、Red Hat OpenShift Virtualization を実際に体験していただくために企画されました。
+このワークショップは、Red Hat OpenShift Virtualization を実際に体験していただくために企画されました。
 
-このイベントでは、仮想化管理者が日々のワークフローでよく遭遇する多くの一般的な管理アクティビティを探ります。
+このイベントでは、仮想化管理者が日々のワークフローでよく遭遇する多くの一般的な管理アクティビティを体験します。
 
 == ロードショーに参加することで最も恩恵を受けるのは誰ですか？
 
@@ -23,47 +24,48 @@ OpenShift Virtualization は、最新の Kubernetes ベースのインフラス�
 
 * _既存の仮想マシンの移行_ : このセクションでは、Migration Toolkit for Virtualization (MTV) を使用して、既存の VMware vSphere 環境から OpenShift Virtualization へ仮想マシンを移行します。
 
-* _ストレージ管理_ : 多くの管理者に馴染みのあるストレージのパラダイムは、OpenShift Virtualization によって変わります。このセクションでは、仮想マシンのストレージ管理に関連する多くのアクションを探ります。
+* _ストレージ管理_ : 多くの管理者に馴染みのあるストレージのパラダイムはOpenShift Virtualization によって変わります。このセクションでは、仮想マシンのストレージ管理に関連する多くのアクションを探ります。
 
-* _仮想マシンのバックアップとリカバリ_ : このユニットでは、仮想マシンを外部サイトにバックアップし、災害時にリストアすることに関する追加の概念を紹介し、実演します。
+* _仮想マシンのバックアップとリカバリ_ : このユニットでは、仮想マシンを外部サイトにバックアップし災害時にリストアすることに関する追加の概念を紹介し、実演します。
 
-* _テンプレートとインスタンスタイプの管理_ : 仮想マシンのデプロイを効率化するために、管理者はデプロイ作業を容易にするために、テ ンプレートを作成したり、インスタンスタイプを定義したりします。このセクションでは、これらのプロセスについて説明します。
+* _テンプレートとインスタンスタイプの管理_ : 仮想マシンのデプロイを効率化するために、管理者はデプロイ作業を容易にするために、テンプレートを作成したり、インスタンスタイプを定義したりします。このセクションでは、これらのプロセスについて説明します。
 
-* _仮想マシンとアプリケーションの操作_ : このセクションでは、インポートした仮想マシンを使って、ロードバランサーのセットアップや、サービスやルートを通じて VM ホストのアプリケーションを公開するなど、2 日目のアクティビティをいくつか実行します。
+* _仮想マシンとアプリケーションの操作_ : このセクションでは、インポートした仮想マシンを使って、ロードバランサーのセットアップや、サービスやルートを通じて VM ホストのアプリケーションを公開するなど、Day-2のアクティビティをいくつか実行します。
 
 == OpenShift 仮想化とは？
 
-* OpenShift Virtualization は Red Hat OpenShift の機能であり、アドオンや別の製品ではなく、すべての資格に含まれています。
-* 現在のすべてのサブスクライバーは、OpenShift サブスクリプションの一部として OpenShift Virtualization を受け取ります。OpenShift 4.5 以降、一般的に利用可能です。
-* OpenShift Virtualization は、Cloud Native Computing Foundation (CNCF) のサンドボックス・プロジェクトである KubeVirt プロジェクトの上流で開発されている「コンテナネイティブ仮想化」技術に基づいています。
+* OpenShift Virtualization は Red Hat OpenShift の機能です。アドオンや拡張製品ではなく、すべてのエディションに含まれています。
+* 現在のすべてのOpenShiftサブスクリプション所有者は、OpenShift サブスクリプションの一部として OpenShift Virtualization を利用可能です。
+OpenShift 4.5 以降より一般公開されています。
+* OpenShift Virtualization は、Cloud Native Computing Foundation (CNCF) のサンドボックスプロジェクトである KubeVirt プロジェクトの上流で開発されている"conatiner-native virtualization" の技術に基づいています。
 * Red Hat Enterprise Linux KVM ハイパーバイザー（RHEL KVM）を活用します。このハイパーバイザーは、世界中の多くの組織やクラウドサービスプロバイダーで使用されており、15 年以上にわたって開発が続けられている、成熟した高性能なオープンソースハイパーバイザーです。
-* OpenShift VirtualizationはRHEL KVMハイパーバイザーを活用し、VMをKubernetesとKubeVirtで管理できるようにする。OpenShift Virtualization VMは、Kubernetesのスケジューリング、ネットワーク、ストレージのインフラを使用します。
+* OpenShift VirtualizationはRHEL KVMハイパーバイザーを活用し、VMをKubernetesとKubeVirtで管理できるようにします。OpenShift Virtualization上のVMは、Kubernetesのスケジューリング、ネットワーク、およびストレージのインフラを使用します。
 * OpenShift Virtualizationには、**無制限の仮想RHELゲスト** 用のエンタイトルメントが含まれています。他のサポートされているオペレーティングシステムのゲストライセンスは別途購入する必要があります。
 * OpenShift Virtualization は、Red Hat の他の KVM 仮想化製品に適用されるのと同じ規則に従って、Windows ゲストのサポートについて Microsoft の SVVP 認証を受けています。
-* OpenShift Virtualization は現在、通常オンプレミスまたは専用ホスティングによるベアメタル物理サーバー上でのみサポートされています。その他のトポロジー（RHV や vSphere のような仮想化インフラ上にデプロイされた OpenShift）のサポートは、現時点では提供されていません。
-* https://www.redhat.com/en/blog/managing-virtual-machines-and-containers-as-code-with-openshift-virtualization-on-red-hat-openshift-service-on-aws[AWS / ROSA^]のサポートは既に発表されており、追加のマネージドOpenShiftクラウドサービスにOpenShift仮想化のサポートを追加しているところです。
+* OpenShift Virtualization は、現在通常オンプレミスまたは専用ホスティングによるベアメタル物理サーバー上でのみサポートされています。その他のデプロイ方法（RHV や vSphere のような仮想化インフラ上にデプロイされた OpenShift）のサポートは、現時点では提供されていません。
+* https://www.redhat.com/en/blog/managing-virtual-machines-and-containers-as-code-with-openshift-virtualization-on-red-hat-openshift-service-on-aws[AWS / ROSA^]のサポートは既に発表されています。その他のマネージドOpenShiftクラウドサービスでのOpenShift Virtualizationのサポートについては現在計画中です。
 * OpenShift Virtualization は OpenShift が仮想マシンを OpenShift クラスタにデプロイ、管理、接続することを可能にします。これには、Kubernetes ネイティブのメソッドを使用してこれらの VM に接続して管理し、Pipelines、GitOps、Service Mesh などの OpenShift 機能を利用する機能が含まれます。
 
 == 従来のVMプラットフォームから乗り換える理由
 
 **クラウドネイティブ開発および/またはクラウドネイティブ運用の採用:**
-Red Hat OpenShift は、スピード、俊敏性、信頼性、そして選択肢を備えたアプリケーションの構築を支援します。構築する場所を選ばず、本番モードでコードを作成できます。重要な仕事に集中できます。
+Red Hat OpenShift は、スピード、俊敏性、信頼性、そして選択肢を備えたアプリケーションの構築を支援します。構築する場所を選ばず、本番モードでコードを作成できます。
+顧客は、ビジネス上重要な仕事に集中できます。
 
 **完全なアプリケーション開発スタック:**
 Red Hat OpenShift Dev Spaces (旧 Red Hat CodeReady Workspaces)、ランタイム、インテグレーションとプロセス自動化、サーバーレス、パイプラインなど、全体を通してセキュリティが確保されています。
 
-**インフラの支出をイノベーションにシフト: ** 
-OpenShiftのネイティブ・アーキテクチャは、重いインフラストラクチャを変更します。
-OpenShiftのネイティブ・アーキテクチャは、SDDCのレガシーから軽量なコンテナ・ネイティブ・フレームワークへのヘビー級のコスト構造を変更します。
+**インフラのコストをイノベーションに転換: ** 
+OpenShift ネイティブ・アーキテクチャは、レガシーな SDDC (Software-Defined Data Center) の重い構造から、軽量なコンテナ・ネイティブ・フレームワークへと変化させます。
 
 **リスクの軽減：**
-OpenShiftはオンプレミスとパブリッククラウドのオプションをサポートしており、パブリッククラウドのロックインに対する保険となる。
+OpenShiftはオンプレミスとパブリッククラウドのオプションをサポートしており、パブリッククラウドのロックインに対する保険となります。
 
-**インフラからの独立：**
+**インフラへの非依存：**
 Red Hat OpenShift は、ベアメタル、オンプレミス仮想化、またはパブリッククラウド上で一貫して実行されるため、デプロイとアップデートの究極の選択肢と柔軟性が得られます。
 
 **純粋なオープンソースのイノベーション：**
-Kubernetes、サーバーレス、サービスメッシュ、Kubernetes Operators などのイノベーションは、Red Hat を筆頭とするオープンソースの速度によってもたらされます。
+Kubernetes、サーバーレス、サービスメッシュ、Kubernetes Operators などのイノベーションは、Red Hat を筆頭とするオープンソースの開発スピードによってもたらされます。
 
 == 次のステップ
 OpenShift Virtualization の詳細をお知りになりたい方は、 https://www.redhat.com/en/technologies/cloud-computing/openshift/virtualization[ランディングページ^] をご覧になるか、 https://docs.openshift.com/container-platform/latest/virt/about_virt/about-virt.html[ドキュメント^] をご確認ください。また、 https://www.youtube.com/playlist?list=PLaR6Rq6Z4IqeQeTosfoFzTyE_QmWZW6n_[YouTube^] でデモビデオをいくつかご覧ください。
@@ -71,8 +73,8 @@ OpenShift Virtualization の詳細をお知りになりたい方は、 https://w
 == ラボ環境の要件
 
 * 参加者は、ブラウザとインターネットにアクセスできる自分のコンピュータを持っている必要があります。
-* Firefoxではコピー＆ペーストができないため、Chromiumベースのブラウザを推奨。
-* リモートアクセスコンソールはデフォルトで US キーボードレイアウトを使うので、他の国のレイアウトのために特殊文字がどこにあるか知っておくとよい。
+* Firefoxではコピー＆ペーストができないため、Chromiumベースのブラウザを推奨します。
+* リモートアクセスコンソールはデフォルトで US キーボードレイアウトを使用します。特殊文字（@, &など）がどのキーで入力可能か予めご確認下さい。
 
 === OpenShift コンソールの認証情報
 
