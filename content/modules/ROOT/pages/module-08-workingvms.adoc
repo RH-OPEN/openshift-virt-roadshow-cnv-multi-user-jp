@@ -139,6 +139,27 @@ spec:
     targetPort: 3306
 ----
 +
+
+NOTE: vSphere環境から移行してきた仮想マシンを使用せず、*vmimported* プロジェクトの仮想マシンを使用する場合は、YAMLを以下の定義で書き換えて下さい。
+
++
+[source,yaml,role=execute,subs="attributes"]
+----
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+  namespace: vmexamples-{user}
+spec:
+  selector:
+    vm.kubevirt.io/name: database
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+----
++
+
 NOTE: 今回、作成するServiceにアタッチするために仮想マシンの名前を使用しました。この名前を持つネームスペースには *database* という名前の VM が 1 つしかないので、VM の YAML をカスタマイズしたりゲストを再起動したりしなくても安全です。
 +
 image::module-08-workingvms/21_Database_YAML.png[link=self, window=blank, width=100%]
