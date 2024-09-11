@@ -1,10 +1,12 @@
 OpenShift Virtualization Roadshowへようこそ！
 
 == 日本語化の方法
-bastionへSSHログイン後、以下のスクリプトを実行ください。
+ラボ環境のbastionへSSHログイン後、以下のコマンドで翻訳スクリプトを実行ください。
 
-(translation.sh)[https://gist.githubusercontent.com/KaitoInaba/1594964e92bb1c0ded7609acdb6ed2f6/raw/cd4a204cb929b2dcb9a75916ab43ceb42c1901d0/translation.sh]
-
+[source,bash,role=execute,subs="attributes"]
+----
+curl -sSL https://gist.githubusercontent.com/KaitoInaba/1594964e92bb1c0ded7609acdb6ed2f6/raw/cd4a204cb929b2dcb9a75916ab43ceb42c1901d0/translation.sh | bash
+----
 
 == はじめに
 このリポジトリーは、Red Hat アソシエイツが世界中の顧客や関係者に提供する OpenShift 仮想化ロードショーのラボガイドをホストしています。
