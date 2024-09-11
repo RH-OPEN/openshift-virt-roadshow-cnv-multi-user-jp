@@ -80,7 +80,7 @@ image::module-07-tempinst/10_Cloud_Init_Script.png[link=self, window=blank, widt
 
 . *Save* ボタンをクリックし、次に *Apply* ボタンをクリックします。
 
-. 次に、左側の *Virtualization* -> *Catalog* メニューをクリックし、*Template catalog* オプションを選択します。作成したテンプレートが、他のすべてのテンプレートと一緒にタイルとして利用できることが確認できるはずです。
+. 次に、左側の *Virtualization* -> *Catalog* メニューをクリックし、*User templates* オプションを選択します。作成したテンプレートが、他のすべてのテンプレートと一緒にタイルとして利用できることが確認できるはずです。
 +
 image::module-07-tempinst/11_User_Templates.png[link=self, window=blank, width=100%]
 

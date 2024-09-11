@@ -116,9 +116,9 @@ image::module-02-mtv/16_VMware_Source_Provider.png[link=self, window=blank, widt
 
 . 次のページで、移動したい3つのVMを選択します:
 
-* database
-* winweb01
-* winweb02
+* database-{guid}-{user}
+* winweb01-{guid}-{user}
+* winweb02-{guid}-{user}
 
 . *Next* をクリックします。
 +
