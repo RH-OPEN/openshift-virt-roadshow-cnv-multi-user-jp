@@ -124,6 +124,7 @@ image::module-07-tempinst/16a_create_configmap.png[link=self, window=blank, widt
 +
 
 * YAML定義
++
 [source,yaml,role=execute]
 ----
 kind: ConfigMap
