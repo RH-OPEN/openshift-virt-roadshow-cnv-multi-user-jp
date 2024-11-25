@@ -118,158 +118,11 @@ NOTE: テンプレートとして使用するゲストOSを準備する具体的
 
 IMPORTANT: ラボのこの部分では、*vmexamples-{user}* プロジェクト内にいることを確認してください。
 
-. インストールウィザードの自動応答のため、*Sysprep* アクションを定義します。画面右上の *+* マークをクリックして *Import YAML* 画面を表示し、以下のYAML定義を貼り付けて、 *Create* をクリックします。
-+
-image::module-07-tempinst/16a_create_configmap.png[link=self, window=blank, width=100%]
-+
+. 左側のメニューから、*Workloads* -> *ConfigMap* に移動し、名前が *move-webapp-vmware-vm* から始まるConfigMapが存在するか確認します。存在する場合、対象のConfigMapの3点メニューをクリックし、表示されたメニューより *Delete ConfigMap* を選択してConfigMapを削除します。
+対象のConfigMap全てに対し削除を実施し、プロジェクト内に名前が  *move-webapp-vmware-vm* から始まるConfigMapが存在しない状態となったら次に進んで下さい。
 
-* YAML定義
 +
-[source,yaml,role=execute]
-----
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: autounattend-yaml
-data:
-  autounattend.xml: |
-    <?xml version="1.0" encoding="utf-8"?>
-    <unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:schemas-microsoft-com:unattend">
-      <settings pass="windowsPE">
-        <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-          <DiskConfiguration>
-            <Disk wcm:action="add">
-              <CreatePartitions>
-                <CreatePartition wcm:action="add">
-                  <Order>1</Order>
-                  <Extend>true</Extend>
-                  <Type>Primary</Type>
-                </CreatePartition>
-              </CreatePartitions>
-              <ModifyPartitions>
-                <ModifyPartition wcm:action="add">
-                  <Active>true</Active>
-                  <Format>NTFS</Format>
-                  <Label>System</Label>
-                  <Order>1</Order>
-                  <PartitionID>1</PartitionID>
-                </ModifyPartition>
-              </ModifyPartitions>
-              <DiskID>0</DiskID>
-              <WillWipeDisk>true</WillWipeDisk>
-            </Disk>
-          </DiskConfiguration>
-          <ImageInstall>
-            <OSImage>
-              <InstallFrom>
-                <MetaData wcm:action="add">
-                  <Key>/IMAGE/NAME</Key>
-                  <Value>Windows Server 2019 SERVERSTANDARD</Value>
-                </MetaData>
-              </InstallFrom>
-              <InstallTo>
-                <DiskID>0</DiskID>
-                <PartitionID>1</PartitionID>
-              </InstallTo>
-            </OSImage>
-          </ImageInstall>
-          <UserData>
-            <AcceptEula>true</AcceptEula>
-            <FullName>Administrator</FullName>
-            <Organization>My Organization</Organization>
-          </UserData>
-          <EnableFirewall>false</EnableFirewall>
-        </component>
-        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-          <SetupUILanguage>
-            <UILanguage>en-US</UILanguage>
-          </SetupUILanguage>
-          <InputLocale>en-US</InputLocale>
-          <SystemLocale>en-US</SystemLocale>
-          <UILanguage>en-US</UILanguage>
-          <UserLocale>en-US</UserLocale>
-        </component>
-      </settings>
-      <settings pass="offlineServicing">
-        <component name="Microsoft-Windows-LUA-Settings" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-          <EnableLUA>false</EnableLUA>
-        </component>
-      </settings>
-      <settings pass="specialize">
-        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-          <AutoLogon>
-            <Password>
-              <Value>R3dh4t1!</Value>
-              <PlainText>true</PlainText>
-            </Password>
-            <Enabled>true</Enabled>
-            <LogonCount>999</LogonCount>
-            <Username>Administrator</Username>
-          </AutoLogon>
-          <OOBE>
-            <HideEULAPage>true</HideEULAPage>
-            <HideLocalAccountScreen>true</HideLocalAccountScreen>
-            <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
-            <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
-            <NetworkLocation>Work</NetworkLocation>
-            <ProtectYourPC>3</ProtectYourPC>
-            <SkipMachineOOBE>true</SkipMachineOOBE>
-          </OOBE>
-          <UserAccounts>
-            <LocalAccounts>
-              <LocalAccount wcm:action="add">
-                <Description>Local Administrator Account</Description>
-                <DisplayName>Administrator</DisplayName>
-                <Group>Administrators</Group>
-                <Name>Administrator</Name>
-              </LocalAccount>
-            </LocalAccounts>
-          </UserAccounts>
-          <TimeZone>Eastern Standard Time</TimeZone>
-        </component>
-      </settings>
-      <settings pass="oobeSystem">
-        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-          <InputLocale>en-US</InputLocale>
-          <SystemLocale>en-US</SystemLocale>
-          <UILanguage>en-US</UILanguage>
-          <UserLocale>en-US</UserLocale>
-        </component>
-        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-          <AutoLogon>
-            <Password>
-              <Value>R3dh4t1!</Value>
-              <PlainText>true</PlainText>
-            </Password>
-            <Enabled>true</Enabled>
-            <LogonCount>999</LogonCount>
-            <Username>Administrator</Username>
-          </AutoLogon>
-          <OOBE>
-            <HideEULAPage>true</HideEULAPage>
-            <HideLocalAccountScreen>true</HideLocalAccountScreen>
-            <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
-            <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
-            <NetworkLocation>Work</NetworkLocation>
-            <ProtectYourPC>3</ProtectYourPC>
-            <SkipMachineOOBE>true</SkipMachineOOBE>
-          </OOBE>
-          <UserAccounts>
-            <LocalAccounts>
-              <LocalAccount wcm:action="add">
-                <Description>Local Administrator Account</Description>
-                <DisplayName>Administrator</DisplayName>
-                <Group>Administrators</Group>
-                <Name>Administrator</Name>
-              </LocalAccount>
-            </LocalAccounts>
-          </UserAccounts>
-          <TimeZone>Eastern Standard Time</TimeZone>
-        </component>
-      </settings>
-    </unattend>
-----
-+
+image::module-07-tempinst/16a_delete_configmap.png[link=self, window=blank, width=100%]
 
 . 左側のメニューから、*Virtualization* -> *Catalog* に移動し、上部にある *Template catalog* タブをクリックします。
 
@@ -285,11 +138,11 @@ image::module-07-tempinst/17_Windows_2k19_Dialog.png[link=self,window=blank,widt
 +
 . このダイアログにて以下を指定します。
 .. *win-sysprep* という名前を指定します。
-.. チェックボックス *Boot from CD* を有効にします。
+.. チェックボックス *Boot from CD* を有効にする。
 .. ドロップダウンメニューから *URL (creates PVC)* を選択します。
 .. *Image URL* を指定します: https://catalog-item-assets.s3.us-east-2.amazonaws.com/qcow_images/Windows2019.iso
-.. Disk size *5GiB* に縮小します。
-.. *Disk source* のサイズはデフォルト値 *60 GiB* を設定したままにします。
+.. Disk size *5GiB* に縮小する。
+.. *Disk source* サイズのディスクをデフォルト値 *60 GiB* に設定したままにする。
 .. *Mount Windows drivers disk* チェックボックスが有効になっていることを確認します。これは、VirtIO 用のドライバーを提供する Windows システムをインストールするために必要です。
 +
 
@@ -297,55 +150,178 @@ image::module-07-tempinst/17_Windows_2k19_Dialog.png[link=self,window=blank,widt
 +
 image::module-07-tempinst/18_Windows_2k19_Parameters.png[link=self, window=blank, width=100%]
 
-. *Customize and create VirtualMachine* 画面で、*Boot mode* オプションの横にある編集ボタン（鉛筆マーク）をクリックします。
+. *Customize and create VirtualMachine* 画面で、*Boot mode* オプションの横にある編集ペンシルをクリックします。
 +
 image::module-07-tempinst/19_Boot_Mode.png[link=self, window=blank, width=100%]
 
 . *Boot mode* メニューがポップアップしたら、ドロップダウンメニューから *BIOS* ブートモードを選択します。
 +
 image::module-07-tempinst/19a_Boot_BIOS.png[link=self, window=blank, width=100%]
-+
 
-. *YAML* タブを選択し、YAML定義の以下のフィールドに、次の値を追加します。
+. 次に、*Scripts* タブをクリックし、*Sysprep* セクションまでスクロールダウンして、*Edit* ボタンをクリックします。
 +
-IMPORTANT: スクリーンショットのように、インデントを正確に記載してください。
+image::module-07-tempinst/20_Customize_Scripts.png[link=self, window=blank, width=100%]
 
-.. *disks* フィールド( *spec*.*template*.*spec*.*domain*.*devices*.*disks* )
+. 新しいテンプレート用の *Sysprep* アクションを作成するための新しいウィンドウがポップアップ表示されます。
 +
-```
-- cdrom:
-    bus: sata
-  name: sysprep
-```
+image::module-07-tempinst/21_Sysprep.png[link=self, window=blank, width=100%]
+
+. 以下のコードブロックをコピーして、*autounattend.xml* セクションに貼り付けます：
 +
-image::module-07-tempinst/20a_sysprep_disks.png[link=self, window=blank, width=100%]
+[source,xml,role=execute]
+----
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:schemas-microsoft-com:unattend">
+  <settings pass="windowsPE">
+    <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <DiskConfiguration>
+        <Disk wcm:action="add">
+          <CreatePartitions>
+            <CreatePartition wcm:action="add">
+              <Order>1</Order>
+              <Extend>true</Extend>
+              <Type>Primary</Type>
+            </CreatePartition>
+          </CreatePartitions>
+          <ModifyPartitions>
+            <ModifyPartition wcm:action="add">
+              <Active>true</Active>
+              <Format>NTFS</Format>
+              <Label>System</Label>
+              <Order>1</Order>
+              <PartitionID>1</PartitionID>
+            </ModifyPartition>
+          </ModifyPartitions>
+          <DiskID>0</DiskID>
+          <WillWipeDisk>true</WillWipeDisk>
+        </Disk>
+      </DiskConfiguration>
+      <ImageInstall>
+        <OSImage>
+          <InstallFrom>
+            <MetaData wcm:action="add">
+              <Key>/IMAGE/NAME</Key>
+              <Value>Windows Server 2019 SERVERSTANDARD</Value>
+            </MetaData>
+          </InstallFrom>
+          <InstallTo>
+            <DiskID>0</DiskID>
+            <PartitionID>1</PartitionID>
+          </InstallTo>
+        </OSImage>
+      </ImageInstall>
+      <UserData>
+        <AcceptEula>true</AcceptEula>
+        <FullName>Administrator</FullName>
+        <Organization>My Organization</Organization>
+      </UserData>
+      <EnableFirewall>false</EnableFirewall>
+    </component>
+    <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <SetupUILanguage>
+        <UILanguage>en-US</UILanguage>
+      </SetupUILanguage>
+      <InputLocale>en-US</InputLocale>
+      <SystemLocale>en-US</SystemLocale>
+      <UILanguage>en-US</UILanguage>
+      <UserLocale>en-US</UserLocale>
+    </component>
+  </settings>
+  <settings pass="offlineServicing">
+    <component name="Microsoft-Windows-LUA-Settings" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <EnableLUA>false</EnableLUA>
+    </component>
+  </settings>
+  <settings pass="specialize">
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <AutoLogon>
+        <Password>
+          <Value>R3dh4t1!</Value>
+          <PlainText>true</PlainText>
+        </Password>
+        <Enabled>true</Enabled>
+        <LogonCount>999</LogonCount>
+        <Username>Administrator</Username>
+      </AutoLogon>
+      <OOBE>
+        <HideEULAPage>true</HideEULAPage>
+        <HideLocalAccountScreen>true</HideLocalAccountScreen>
+        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+        <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+        <NetworkLocation>Work</NetworkLocation>
+        <ProtectYourPC>3</ProtectYourPC>
+        <SkipMachineOOBE>true</SkipMachineOOBE>
+      </OOBE>
+      <UserAccounts>
+        <LocalAccounts>
+          <LocalAccount wcm:action="add">
+            <Description>Local Administrator Account</Description>
+            <DisplayName>Administrator</DisplayName>
+            <Group>Administrators</Group>
+            <Name>Administrator</Name>
+          </LocalAccount>
+        </LocalAccounts>
+      </UserAccounts>
+      <TimeZone>Eastern Standard Time</TimeZone>
+    </component>
+  </settings>
+  <settings pass="oobeSystem">
+    <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <InputLocale>en-US</InputLocale>
+      <SystemLocale>en-US</SystemLocale>
+      <UILanguage>en-US</UILanguage>
+      <UserLocale>en-US</UserLocale>
+    </component>
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <AutoLogon>
+        <Password>
+          <Value>R3dh4t1!</Value>
+          <PlainText>true</PlainText>
+        </Password>
+        <Enabled>true</Enabled>
+        <LogonCount>999</LogonCount>
+        <Username>Administrator</Username>
+      </AutoLogon>
+      <OOBE>
+        <HideEULAPage>true</HideEULAPage>
+        <HideLocalAccountScreen>true</HideLocalAccountScreen>
+        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+        <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+        <NetworkLocation>Work</NetworkLocation>
+        <ProtectYourPC>3</ProtectYourPC>
+        <SkipMachineOOBE>true</SkipMachineOOBE>
+      </OOBE>
+      <UserAccounts>
+        <LocalAccounts>
+          <LocalAccount wcm:action="add">
+            <Description>Local Administrator Account</Description>
+            <DisplayName>Administrator</DisplayName>
+            <Group>Administrators</Group>
+            <Name>Administrator</Name>
+          </LocalAccount>
+        </LocalAccounts>
+      </UserAccounts>
+      <TimeZone>Eastern Standard Time</TimeZone>
+    </component>
+  </settings>
+</unattend>
+----
+
+. コードが貼り付けられたら、ダイアログの *Save* ボタンをクリックします。
 +
-.. *volumes* フィールド（ *spec*.*template*.*spec*.*volumes* ）
-+
-```
-- name: sysprep
-  sysprep:
-    configMap:
-      name: autounattend-yaml
-```
-+
-image::module-07-tempinst/20b_sysprep_volumes.png[link=self, window=blank, width=100%]
-+
+image::module-07-tempinst/22_Windows_2k19_Sysprep.png[link=self, window=blank, width=100%]
+
 . 画面下部の *Create VirtualMachine* ボタンをクリックします。
 +
 image::module-07-tempinst/23_Create_VirtualMachine.png[link=self, window=blank, width=100%]
-+
-. 仮想マシンは、ISOイメージのダウンロード、設定、インスタンスの起動により、プロビジョニングプロセスを開始します。
+
+. 仮想マシンはISOイメージのダウンロード、設定、インスタンスの起動によってプロビジョニングプロセスを開始します。
 +
 image::module-07-tempinst/24_Windows_2k19_Provisioning.png[link=self, window=blank, width=100%]
 
 . このプロセスには数分かかることがあります。ISOダウンロードの進行状況は、*Diagnostics* タブをクリックすることで確認できます。
 +
 image::module-07-tempinst/25_CD_Import.png[link=self, window=blank, width=100%]
-
-. 数分後、仮想マシンが起動し、ステータスが *Running* に変わります。*Console* タブをクリックして、オートアテンドのインストールプロセスを表示します：
-+
-image::module-07-tempinst/26_Windows_2k19_Console.png[link=self, window=blank, width=100%]
 
 . VMのインストールプロセスが完了したら（プロビジョニングに3～5分、起動と設定に約10分かかります）、停止ボタンで電源を切ってください。
 +
