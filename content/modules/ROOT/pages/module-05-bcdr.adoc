@@ -2,12 +2,12 @@
 
 == はじめに
 
-OpenShift仮想化で仮想マシンのバックアップとリカバリのために利用可能なオプションには事欠きません。これらのソリューションの多くは、OpenShift でPodを保護するのと同じ方法で機能します。仮想マシン、または複数の仮想マシンを含むネームスペースのバックアップを取り、オブジェクトストレージバケットにリモートで保存することでこれを行います。これらのバックアップには通常、仮想マシンを定義するメタデータやカスタムリソースとともに、永続ストレージボリュームも含まれます。
+OpenShift Virtualizationで仮想マシンのバックアップとリカバリのために利用可能なオプションは数多く存在します。これらのソリューションの多くは、OpenShift でPodを保護するのと同じ方法で機能します。仮想マシン、または複数の仮想マシンを含むネームスペースのバックアップを取り、オブジェクトストレージバケットにリモートで保存することでこれを行います。これらのバックアップには通常、仮想マシンを定義するメタデータやカスタムリソースとともに、永続ストレージボリュームも含まれます。
 
 Red Hat ソリューションには以下が含まれます：
 
 * https://docs.openshift.com/container-platform/4.15/backup_and_restore/application_backup_and_restore/oadp-features-plugins.html[*OADP (OpenShift APIs for Data Protection)*]: 
-仮想マシンを含む OpenShift オブジェクトをバックアップおよびリストアするための、ストレージに依存しない方法を提供する Red Hat提供Operator。
+仮想マシンを含む OpenShift オブジェクトをバックアップおよびリストアするための、ストレージに依存しない方法を提供する Red Hat提供のOperator。
 * https://access.redhat.com/documentation/en-us/red_hat_openshift_data_foundation/4.15/html/configuring_openshift_data_foundation_disaster_recovery_for_openshift_workloads/metro-dr-solution/[*OpenShift Data Foundation Metro-DR*]
 
 エコシステムパートナーソリューション
@@ -20,17 +20,17 @@ Red Hat ソリューションには以下が含まれます：
 NOTE: これは、サポートされているバックアップとリカバリのソリューションを提供するパートナーの網羅的なリストを意図したものではありません。
 ストレージまたはバックアップ製品のベンダーに問い合わせて、その製品と OpenShift Virtualization との互換性を確認してください。
 
-この部分では、OADP を使用して仮想マシンのバックアップと復元を実行します。
+このラボでは、OADP を使用して仮想マシンのバックアップと復元を実行します。
 
 [[review_operator]]
 == OADP オペレーターのレビュー
 
-. 左側のメニューから *Operators* -> *Installed Operators* に移動し、プロジェクト *oadp-{user}* が選択されていることを確認します。Name search フィールドに *OADP* と入力すると、
-インストールされているバージョンの *OADP Operator* が表示されます。オペレーターをクリックして詳細を確認してください。
+. 左側のメニューから *Operators* -> *Installed Operators* に移動し、プロジェクト *oadp-{user}* を選択します。
+Name search フィールドに *OADP* と入力すると、インストールされているバージョンの *OADP Operator* が表示されます。オペレーターをクリックして詳細を確認してください。
 +
 image::module-05-bcdr/00_Left_Menu.png[link=self, window=blank, width=100%]
 
-. 利用可能な *提供API* を確認します。このモジュールでは、*Backup* と *Restore* ファンクションを使用します。
+. 利用可能なAPI (*Provided APIs*) を確認します。このモジュールでは、*Backup* と *Restore* ファンクションを使用します。
 +
 image::module-05-bcdr/01_Overview.png[link=self, window=blank, width=100%]
 
@@ -42,7 +42,7 @@ image::module-05-bcdr/02_DPA.png[link=self, window=blank, width=100%]
 +
 image::module-05-bcdr/03_OADP_YAML.png[link=self, window=blank, width=100%]
 
-*kubevirt* プラグインを追加することで *OADP* が設定されます。クラスタ上で動作している OpenShift Data Foundations が提供する内部オブジェクトストレージバケットを使用するように設定されていることに注目してください。
+*OADP* に *kubevirt* プラグインが追加されていること、およびクラスタ上で動作している OpenShift Data Foundations が提供する内部オブジェクトストレージバケットを使用するように設定されていることに注目してください。
 
 [IMPORTANT]
 便宜上、このラボではローカルのオブジェクトバケットにバックアップを実行するように設定していますが、本番環境ではバックアップを外部ストレージシステム、またはクラウドベースのオブジェクトストレージバケットに向けるようにします。
@@ -94,7 +94,7 @@ spec:
 +
 image::module-05-bcdr/05_Create_Backup_YAML.png[link=self, window=blank, width=100%] [link=self,window=blank,width=100%]
 +
-NOTE: 前のセクションを完了しておらず、*fedora02* VM を持っていない場合は、上記の YAML のラベルセレクタをインベントリ内の仮想マシンに一致するように変更します。
+NOTE: 前のセクションを完了しておらず、*fedora02* VM が作成されていない場合は、上記の YAML のLabelSelectorをインベントリ内の仮想マシンに一致するように変更します。
 
 . *Status* カラムが *Completed* に変わるまで待ちます。これは、仮想マシンが正常にバックアップされたことを示します。
 +
@@ -103,7 +103,7 @@ image::module-05-bcdr/06_Backup_Completed.png[link=self, window=blank, width=100
 [[restore_backup]]
 == バックアップからのリストア
 
-. *Virtualization* -> *VirtualMachines* に移動し、*fedora02* VM の右側にある 3 点のメニューをクリックし、表示されるメニューから *Delete* を選択します
+. *Virtualization* -> *VirtualMachines* に移動し、*fedora02* VM の右側にある 3 点メニューをクリックし、表示されるメニューから *Delete* を選択します
  (*vmexamples-{user}* プロジェクトに戻る必要があるかもしれません)。
 +
 image::module-05-bcdr/07_Delete_VM.png[link=self, window=blank, width=100%]
@@ -113,11 +113,11 @@ image::module-05-bcdr/07_Delete_VM.png[link=self, window=blank, width=100%]
 image::module-05-bcdr/08_Confirm_Delete.png[link=self, window=blank, width=100%]
 
 . [*Operators*]->[*Installed Operators*]に戻り、*OADP Operator* を選択します（ *oadp-{user}* プロジェクトに切り替える必要があるかもしれません）。
-. 水平ナビゲーション・バーを使用して *Restore* タブを見つけ、*Restore* タブをクリックし、 *Create Restore* を押します。
+. 水平ナビゲーションバーより *Restore* タブをクリックし、表示されるメニューより *Create Restore* を押します。
 +
 image::module-05-bcdr/09_Restore_Tab.png[link=self, window=blank, width=100%]
 
-. YAMLビューに切り替え、内容を以下のものに置き換える：
+. YAMLビューに切り替え、内容を以下のものに置き換えます:
 +
 [source,yaml,role=execute,subs="attributes"]
 ----
@@ -139,11 +139,11 @@ spec:
   restorePVs: true
 ----
 
-. 一番下の *Create* ボタンを押す。
+. 一番下の *Create* ボタンを押します。
 +
 image::module-05-bcdr/10_Create_Restore_YAML.png[link=self, window=blank, width=100%]
 
-. *Status* 列が *Completed* に変わるのを確認するまで待つ。
+. *Status* 列が *Completed* に変わるのを確認するまで待ちます。
 +
 image::module-05-bcdr/11_Restore_Completed.png[link=self, window=blank, width=100%]
 

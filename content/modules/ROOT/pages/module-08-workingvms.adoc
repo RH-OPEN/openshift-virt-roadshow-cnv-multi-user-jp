@@ -7,7 +7,7 @@
 これを達成するために、OpenShift SDN ポッドネットワークを利用するときのデフォルトである service/route メソッドを使ってアプリケーションを公開し、アプリケーションがクラスタの外から到達できるようにします。
 
 [[service_route]]
-== Service/Routeでアプリケーションを公開する
+== Service/Routeを使用してアプリケーションを公開する
 
 デフォルトでは、仮想マシンは SDN に接続されています。これはネットワークにアクセスするための便利で簡単な方法ですが、仮想マシンや OpenShift クラスタ内の他のポッドがVM上のアプリケーションを見つけて接続するのは難しいかもしれません。
 これを解決するために、2つのWindowsベースのWebサーバー間で接続のバランスをとるために *Service* を使用し、各ServiceディスカバリーのDNSエントリーを作成し、外部クライアントが仮想マシン内でホストされているアプリケーションにアクセスできるように *Route* を作成します。
@@ -35,8 +35,8 @@ image::module-08-workingvms/11_Imported_VMs_List.png[link=self, window=blank, wi
 +
 NOTE: *Migrating Existing Virtual Machines* モジュールを完了した場合は *vmexamples-{user}* 、完了していない場合は *vmimported-{user}* と、正しいプロジェクトを選択していることを確認してください。
 
-. *winweb01* VMを選択し、*YAML* タブに移動します。
-. *spec:* セクションを見つけ、*template.metadata* セクションの下の VM リソースの *labels* セクションに以下の行を追加します：
+. *winweb01-{user}* VMを選択し、*YAML* タブに移動します。
+. *spec:* セクションを見つけ、*template.metadata* セクション下の *labels* セクションに以下の行を追加します：
 +
 [source,yaml,role=execute]
 ----
@@ -48,12 +48,13 @@ IMPORTANT: 以下のスクリーンショットのように、インデントを
 +
 image::module-08-workingvms/12_Imported_VMs_YAML.png[link=self, window=blank, width=100%]
 
-. VM *winweb02* に対し同じ作業を実施します。
-. まだ実行中でなければ、*database* 仮想マシンを起動します。
-. *winweb01* および *winweb02* 仮想マシンを起動します。
+. VM *winweb02-{user}* に対し同じ作業を実施します。
+. まだ実行中でなければ、*database-{user}* 仮想マシンを起動します。
+. *winweb01-{user}* および *winweb02-{user}* 仮想マシンを起動します。
 +
 NOTE: 各仮想マシンのコンソールタブにアクセスして、仮想マシンが正しく動作していることを確認します。
 
+[[create_service]]
 === Serviceの作成
 
 . *Networking* -> *Services* に移動し、*Create Service* を押します。
@@ -91,10 +92,11 @@ image::module-08-workingvms/15_Imported_VMs_PodSelector.png[link=self, window=bl
 +
 image::module-08-workingvms/16_Imported_VMs_Pods.png[link=self, window=blank, width=100%]
 
+[[create_route]]
 === Routeの作成
 
 これで、OpenShiftクラスタ内からWindows IISサーバにアクセスできるようになりました。他の仮想マシンは、Service名 + ネームスペースで決まる DNS 名 *webapp.vmexamples* を使ってアクセスできます。
-しかし、これらの Web サーバーは外部からアクセスできるようにしたいアプリケーションのフロントエンドなので、*Route* を使って公開します。
+ただし、これらの Web サーバーはアプリケーションのフロントエンドであるため、外部からアクセスできるようにする必要があります。これは、 *Route* を使用して公開することで実現します。
 
 . 左のナビゲーション・メニューから *Networking* -> *Routes* に移動し、正しいプロジェクト名を使用していることを確認のうえ、*Create Route* を押します。
 +
@@ -121,7 +123,7 @@ image::module-08-workingvms/20_WebApp_Error.png[link=self, window=blank, width=1
 +
 NOTE: 接続性の問題を解決するには、データベースVM用のServiceを作成して、ウェブサーバーからアクセスできるようにする必要があります。
 
-. もう一度、*Networking* -> *Services* に移動し、*Create Service* を押す。YAMLを以下の定義に置き換えます:
+. もう一度、*Networking* -> *Services* に移動し、*Create Service* を押します。YAMLを以下の定義に置き換えます:
 +
 [source,yaml,role=execute,subs="attributes"]
 ----
@@ -132,35 +134,14 @@ metadata:
   namespace: vmexamples-{user}
 spec:
   selector:
-    vm.kubevirt.io/name: database-{guid}-{user}
+    vm.kubevirt.io/name: database-{user}
   ports:
   - protocol: TCP
     port: 3306
     targetPort: 3306
 ----
 +
-
-NOTE: vSphere環境から移行してきた仮想マシンを使用せず、*vmimported* プロジェクトの仮想マシンを使用する場合は、YAMLを以下の定義で書き換えて下さい。
-
-+
-[source,yaml,role=execute,subs="attributes"]
-----
-apiVersion: v1
-kind: Service
-metadata:
-  name: database
-  namespace: vmimported-{user}
-spec:
-  selector:
-    vm.kubevirt.io/name: database
-  ports:
-  - protocol: TCP
-    port: 3306
-    targetPort: 3306
-----
-+
-
-NOTE: 今回、作成するServiceにアタッチするために仮想マシンの名前を使用しました。この名前を持つネームスペースには *database* という名前の VM が 1 つしかないので、VM の YAML をカスタマイズしたりゲストを再起動したりしなくても安全です。
+NOTE: 今回、作成するServiceにアタッチするために仮想マシンの名前を使用しました。この名前を持つネームスペースには *database-{user}* という名前の VM が 1 つしかないので、VM の YAML をカスタマイズしたりゲストを再起動したりしなくても安全です。
 +
 image::module-08-workingvms/21_Database_YAML.png[link=self, window=blank, width=100%]
 

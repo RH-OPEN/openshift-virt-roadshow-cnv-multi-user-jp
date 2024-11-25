@@ -179,24 +179,33 @@ image::module-01-intro/19_VM_Actions_Paused.png[link=self, window=blank, width=1
 このセクションでは、VM をシャットダウンせずに OpenShift ノードから別のノードに移行します。ライブマイグレーションには、VMディスクを移行元と移行先の両方のノードに同時にマウントできるように、*ReadWriteMany* (RWX) ストレージが必要です。OpenShift Virtualizationは、他の仮想化ソリューションとは異なり、多数の異なるVMのための多くのVMディスクを保持する各クラスタメンバーにマウントされたモノリシックデータストアを使用しません。
 その代わりに、各VMディスクは必要なときに必要な場所にのみマウントされる独自のボリュームに格納されます。
 
-. *Overview* タブに移動し、ワーカーノードが稼働しているノードを確認します：
-+
-image::module-01-intro/20_VM_Info_Node.png[link=self, window=blank, width=100%]
+. *Overview* タブに移動します。クラスタ管理者でログインしている場合、VMが稼働しているノードを確認することができます。
 +
 [NOTE]
 ====
-クラスタ管理者だけがノードを見ることができます - スクリーンショットは管理者が見るものの例です。しかし、VMのマイグレーションは可能です - ノードの変更が表示されないだけです。
-====
+ワークショップで使用するユーザはクラスタ管理者ではないため、VMの稼働ノードを見ることはできません。
+下記のスクリーンショットは管理者で表示した例です。
 
+しかし、VMのマイグレーションは可能です（ノードの変更が表示されないだけです）。
+====
++
+image::module-01-intro/20_VM_Info_Node.png[link=self, window=blank, width=100%]
+
++
 . *Actions* メニューを使用して、 *Migrate* オプションを選択します。
 +
 image::module-01-intro/21_VM_Dialog_Migrate.png[link=self, window=blank, width=100%]
 
-. 数秒後、VMはステータスを *Migrating* に変更します。数秒後、VMは *Running* ステータスに戻りますが、新しいノード上です。VMは正常にライブ・マイグレーションされた！
+. VMのステータスが *Migrating* に変更され、数秒後、*Running* ステータスに戻ることを確認します。これでライブマイグレーションが完了しました。
 +
 image::module-01-intro/22_Migrated.png[link=self, window=blank, width=100%]
++
+[NOTE]
+====
+クラスタ管理者ユーザでVMを実行しているPodを見ると、VMがノード間を移動しているのがわかります。
 
-. VMを実行しているPodを見ると、VMがノード間を移動しているのがわかります。まばたきすると見逃してしまいますが！
+ワークショップで使用するユーザはクラスタ管理者ではないため、VMの稼働ノードを見ることはできません。下記のスクリーンショットは管理者で表示した例です。
+====
 +
 image::module-01-intro/23_PodLink.png[link=self, window=blank, width=100%]
 image::module-01-intro/24_Pod.png[link=self, window=blank, width=100%]

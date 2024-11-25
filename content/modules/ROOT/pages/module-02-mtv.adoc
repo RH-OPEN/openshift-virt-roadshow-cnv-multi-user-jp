@@ -63,11 +63,17 @@ vSphere上のデータストアやポートグループのようなリソース�
 . VMware vCenter に移動する: https://{vcenter_console}[vCenter Console^].
 . *Launch vSphere Client* をクリックします。
 . 次の認証情報でログインします：
-- 次の認証情報でログインします。
 - *ユーザ:* {vcenter_full_user}
 - *パスワード* : {vcenter_password} 
-
-. デフォルトでは、ナビゲーションツリーの最上部にある *Inventory* ビューに移動します。 *Workloads* アイコンをクリックして、ナビゲーションツリーを展開し、 ユーザ名に一致するフォルダとその下の4つのVMを確認します。
++
+[NOTE]
+====
+始めてvCenterにログインすると、「オブジェクトを表示する権限がありません。」のメッセージが表示されますが、これは正常な動作です。
+ログインユーザに環境のトップオブジェクトの表示権限が付与されていないために表示されていますが、以降のオペレーションに影響はありません。
+====
++
+. デフォルトでは、ナビゲーションツリーの最上部にある *Inventory* ビューに移動します。
+*Workloads* アイコンをクリックして、ナビゲーションツリーを展開し、*Roadshow* フォルダとその下の4つのVMを確認します。
 画面上部の *VMs* タブをクリックして、VMの詳細を表示します。
 +
 image::module-02-mtv/00_Workload_VM_List.png[link=self, window=blank, width=100%]
@@ -76,7 +82,8 @@ image::module-02-mtv/00_Workload_VM_List.png[link=self, window=blank, width=100%
 +
 image::module-02-mtv/01_vSphere_Network.png[link=self, window=blank, width=100%]
 
-. 最後に、*Datastores* ビューを表示して、使用中のデータストアを確認します。ツリーを展開して、*SDDC-Datacenter* にアタッチされているデータストアを表示し、オプションで *VMs* サブタブをブラウズして、各仮想マシンで使用されている容量を表示します。
+. 最後に、*Datastores* ビューを表示して、使用中のデータストアを確認します。
+ツリーを展開して環境に存在するデータストアを表示し、オプションで *VMs* サブタブをブラウズして、各仮想マシンで使用されている容量を表示します。
 +
 image::module-02-mtv/02_vSphere_Datastore.png[link=self,window=blank,width=100%]
 
@@ -84,7 +91,7 @@ image::module-02-mtv/02_vSphere_Datastore.png[link=self,window=blank,width=100%]
 
 Migration Toolkit for Virtualization (*MTV*) は、VMware Virtual Disk Development Kit (*VDDK*) SDK を使用して、VMware vSphere から仮想ディスクを転送します。この環境では、VDDKはすでに設定されています。
 
-. 左メニューの *Migration* -> *Providers for virtualization* に移動します。
+. OpenShiftの画面に戻り、左メニューの *Migration* -> *Providers for virtualization* に移動します。
 . プロジェクト *mtv-{user}* を選択します。
 +
 image::module-02-mtv/03_MTV_Providers.png[link=self, window=blank, width=100%]
@@ -93,7 +100,7 @@ image::module-02-mtv/03_MTV_Providers.png[link=self, window=blank, width=100%]
 ====
 MTV 2.4以降では、プロジェクト/ネームスペースを認識し、管理者権限を必要としません。VMのインポートをアプリケーションチームやVMユーザーに委任することで、ユーザー自身が自分のペースで移行を行うことができます。
 
-また、インベントリ・サーバの警告は無視してかまいません。このラボの作業では必要ありません。
+また、インベントリサーバの警告は無視してかまいません。このラボの作業では必要ありません。
 ====
 
 . デフォルトでは、ターゲットプラットフォームとして *OpenShift Virtualization* を表す *host* というプロバイダーがあります。
@@ -116,9 +123,9 @@ image::module-02-mtv/16_VMware_Source_Provider.png[link=self, window=blank, widt
 
 . 次のページで、移動したい3つのVMを選択します:
 
-* database-{guid}-{user}
-* winweb01-{guid}-{user}
-* winweb02-{guid}-{user}
+* database-{user}
+* winweb01-{user}
+* winweb02-{user}
 
 . *Next* をクリックします。
 +
