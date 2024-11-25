@@ -122,6 +122,8 @@ IMPORTANT: ラボのこの部分では、*vmexamples-{user}* プロジェクト�
 +
 image::module-07-tempinst/16a_create_configmap.png[link=self, window=blank, width=100%]
 +
+
+* YAML定義
 [source,yaml,role=execute]
 ----
 kind: ConfigMap
@@ -304,6 +306,7 @@ image::module-07-tempinst/19a_Boot_BIOS.png[link=self, window=blank, width=100%]
 +
 
 . *YAML* タブを選択し、YAML定義の以下のフィールドに、次の値を追加します。
+
 IMPORTANT: スクリーンショットのように、インデントを正確に記載してください。
 
 .. *disks* フィールド( *spec* - *template* - *spec* - *domain* - *devices* - *disks* )
@@ -360,6 +363,8 @@ image::module-07-tempinst/28_Storage_PVC.png[link=self, window=blank, width=100%
 * *StorageClass* : *ocs-external-storagecluster-ceph-rbd-immediate*
 
 +
+NOTE: *ocs-external-storagecluster-ceph-rbd-immediate* ストレージクラスは、デフォルトのストレージクラスよりPVCの作成後即座にPVが作成されるよう設定を変更したクラスです。このストレージクラスの使用により、クローンPVCの作成後即座にPVが作成され使用可能になります。バックエンドのストレージとしては、デフォルトのストレージクラスと同じくOpenShift Data Foundation (ODF) により提供されます。
+
 image::module-07-tempinst/29_Clone_Menu.png[link=self, window=blank, width=100%]
 
 . 一度これを保存しておけば、今後Windows VMを素早く作成するのに使うことができます。

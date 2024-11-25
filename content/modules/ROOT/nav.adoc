@@ -29,3 +29,5 @@
 
 * xref:module-08-workingvms.adoc[仮想マシンとアプリケーション]
 ** xref:module-08-workingvms.adoc#service_route[Service/Routeでアプリケーションを公開する]
+** xref:module-08-workingvms.adoc#create_service[Serviceの作成]
+** xref:module-08-workingvms.adoc#create_route[Routeの作成]
