@@ -310,7 +310,7 @@ image::module-07-tempinst/19a_Boot_BIOS.png[link=self, window=blank, width=100%]
 +
 IMPORTANT: スクリーンショットのように、インデントを正確に記載してください。
 
-.. *disks* フィールド( *spec* - *template* - *spec* - *domain* - *devices* - *disks* )
+.. *disks* フィールド( *spec*.*template*.*spec*.*domain*.*devices*.*disks* )
 +
 ```
 - cdrom:
@@ -320,7 +320,7 @@ IMPORTANT: スクリーンショットのように、インデントを正確に
 +
 image::module-07-tempinst/20a_sysprep_disks.png[link=self, window=blank, width=100%]
 +
-.. *volumes* フィールド（ *spec* - *template* - *volumes* ）
+.. *volumes* フィールド（ *spec*.*template*.*spec*.*volumes* ）
 +
 ```
 - name: sysprep
