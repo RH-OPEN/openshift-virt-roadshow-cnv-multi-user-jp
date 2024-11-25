@@ -334,7 +334,7 @@ image::module-07-tempinst/20b_sysprep_volumes.png[link=self, window=blank, width
 . 画面下部の *Create VirtualMachine* ボタンをクリックします。
 +
 image::module-07-tempinst/23_Create_VirtualMachine.png[link=self, window=blank, width=100%]
-
++
 . 仮想マシンは、ISOイメージのダウンロード、設定、インスタンスの起動により、プロビジョニングプロセスを開始します。
 +
 image::module-07-tempinst/24_Windows_2k19_Provisioning.png[link=self, window=blank, width=100%]
