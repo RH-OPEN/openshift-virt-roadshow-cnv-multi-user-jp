@@ -109,7 +109,6 @@ image::module-07-tempinst/15_MariaDB_Login.png[link=self, window=blank, width=10
 
 [[create_win]]
 == Windows VMテンプレートの作成
-
 このラボのこのセグメントでは、Web サーバー上でホストされている ISO を使用して Microsoft Windows Server 2019 をインストールします。これは、Web サーバー、オブジェクトストレージ、またはクラスタ内の他の永続ボリュームなど、多くの場所からディスクをソースとする機能を利用する仮想マシンにオペレーティングシステムをインストールする方法の 1 つです。
 
 このプロセスは、最初のオペレーティングシステムのインストール後に、他のテンプレートで使用するために、Sysprepされた仮想マシンからクローンされたルートディスクを作成することによって合理化できます。
@@ -118,11 +117,20 @@ NOTE: テンプレートとして使用するゲストOSを準備する具体的
 
 IMPORTANT: ラボのこの部分では、*vmexamples-{user}* プロジェクト内にいることを確認してください。
 
-. 左側のメニューから、*Workloads* -> *ConfigMap* に移動し、名前が *move-webapp-vmware-vm* から始まるConfigMapが存在するか確認します。存在する場合、対象のConfigMapの3点メニューをクリックし、表示されたメニューより *Delete ConfigMap* を選択してConfigMapを削除します。
-対象のConfigMap全てに対し削除を実施し、プロジェクト内に名前が  *move-webapp-vmware-vm* から始まるConfigMapが存在しない状態となったら次に進んで下さい。
+. まず、ラボのセクション2（仮想マシンの移行）により作成されたConfigMapの削除を行います。
+左側のメニューから、*Workloads* -> *ConfigMap* に移動し、セクション2にて作成したMigration Planの名称から始まるConfigMapが存在することを確認します。
+
+* セクション2をラボガイド通り実施した場合は、 *move-webapp-vmware-vm* から始まるConfigMapが存在するはずです。
+* セクション2にて任意の名称でMigration Planを作成していた場合は、作成したMigration Planの名称に合わせてConfigMapをご確認下さい。
+
+. 該当するConfigMapが存在する場合、対象のConfigMapの3点メニューをクリックし、表示されたメニューより *Delete ConfigMap* を選択してConfigMapを削除します。
+対象のConfigMap全てに対し削除を実施し、プロジェクト内に該当するConfigMapが存在しない状態となったら次に進んで下さい。
 
 +
 image::module-07-tempinst/16a_delete_configmap.png[link=self, window=blank, width=100%]
+
++
+NOTE: ラボ環境で使用しているOpenShift Virtualizationのバージョンにはバグが確認されており、上記の手順はこのバグに対処するためのものです。このバグは今後の修正で対応される予定です。
 
 . 左側のメニューから、*Virtualization* -> *Catalog* に移動し、上部にある *Template catalog* タブをクリックします。
 
